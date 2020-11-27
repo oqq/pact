@@ -1,0 +1,35 @@
+{
+    "name": "oqq/pact",
+    "description": "TBD",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Braun",
+            "email": "eb@oqq.be"
+        }
+    ],
+    "require": {
+        "php": "7.4.* | 8.0.*",
+        "webmozart/assert": "^1.9"
+    },
+    "require-dev": {
+        "infection/infection": "^0.20.2",
+        "phpunit/phpunit": "^9.4",
+        "psalm/plugin-phpunit": "^0.13.0",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "^4.2"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Oqq\\Pact\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Oqq\\PactTest\\": "tests/"
+        }
+    }
+}
