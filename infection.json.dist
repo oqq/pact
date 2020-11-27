@@ -7,7 +7,7 @@
     "logs": {
         "text": "php://stderr",
         "badge": {
-            "branch": "master"
+            "branch": "main"
         }
     },
     "minMsi": 100,
