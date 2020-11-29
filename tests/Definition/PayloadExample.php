@@ -156,4 +156,21 @@ final class PayloadExample
             'name' => 'provider',
         ];
     }
+
+    public static function message(): array
+    {
+        return [
+            'description' => self::description(),
+            'provider_states' => self::providerStates(),
+            'content' => '{"some": "value"}',
+            'metadata' => [],
+        ];
+    }
+
+    public static function messages(): array
+    {
+        return [
+            self::message(),
+        ];
+    }
 }
