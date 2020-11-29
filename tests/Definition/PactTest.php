@@ -20,6 +20,7 @@ final class PactTest extends TestCase
             'consumer' => PayloadExample::consumer(),
             'provider' => PayloadExample::provider(),
             'interactions' => PayloadExample::interactions(),
+            'messages' => PayloadExample::messages(),
         ]);
 
         $payload = $pact->toArray();
@@ -27,6 +28,7 @@ final class PactTest extends TestCase
         Assert::assertArrayHasKey('consumer', $payload);
         Assert::assertArrayHasKey('provider', $payload);
         Assert::assertArrayHasKey('interactions', $payload);
+        Assert::assertArrayHasKey('messages', $payload);
     }
 
     /**
@@ -48,10 +50,12 @@ final class PactTest extends TestCase
             'consumer' => PayloadExample::consumer(),
             'provider' => PayloadExample::provider(),
             'interactions' => PayloadExample::interactions(),
+            'messages' => PayloadExample::messages(),
         ];
 
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'consumer');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'provider');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'interactions');
+        yield from ValueObjectPayloadAssertion::array($perfectValues, 'messages');
     }
 }
