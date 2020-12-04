@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace Oqq\PactTest\Definition;
 
-use Oqq\Pact\Definition\Pact;
+use Oqq\Pact\Definition\MessagePact;
 use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Pact\Definition\Pact
+ * @covers \Oqq\Pact\Definition\MessagePact
  */
-final class PactTest extends TestCase
+final class MessagePactTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $pact = Pact::fromArray([
+        $pact = MessagePact::fromArray([
             'consumer' => PayloadExample::consumer(),
             'provider' => PayloadExample::provider(),
-            'interactions' => PayloadExample::interactions(),
             'messages' => PayloadExample::messages(),
         ]);
 
@@ -27,7 +26,6 @@ final class PactTest extends TestCase
 
         Assert::assertArrayHasKey('consumer', $payload);
         Assert::assertArrayHasKey('provider', $payload);
-        Assert::assertArrayHasKey('interactions', $payload);
         Assert::assertArrayHasKey('messages', $payload);
     }
 
@@ -38,7 +36,7 @@ final class PactTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
-        Pact::fromArray($payloadExample);
+        MessagePact::fromArray($payloadExample);
     }
 
     /**
@@ -49,13 +47,11 @@ final class PactTest extends TestCase
         $perfectValues = [
             'consumer' => PayloadExample::consumer(),
             'provider' => PayloadExample::provider(),
-            'interactions' => PayloadExample::interactions(),
             'messages' => PayloadExample::messages(),
         ];
 
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'consumer');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'provider');
-        yield from ValueObjectPayloadAssertion::array($perfectValues, 'interactions');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'messages');
     }
 }
