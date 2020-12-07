@@ -163,7 +163,7 @@ final class PayloadExample
             'description' => self::description(),
             'provider_states' => self::providerStates(),
             'content' => '{"some": "value"}',
-            'metadata' => [],
+            'metadata' => ['some' => 'value'],
         ];
     }
 

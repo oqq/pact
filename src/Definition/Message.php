@@ -43,6 +43,16 @@ final class Message
         ];
     }
 
+    public function content(): string
+    {
+        return $this->content;
+    }
+
+    public function metadata(): array
+    {
+        return $this->metadata;
+    }
+
     private function __construct(
         Description $description,
         ProviderStates $providerStates,

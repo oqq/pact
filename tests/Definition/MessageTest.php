@@ -16,15 +16,17 @@ final class MessageTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = Message::fromArray([
+        $message = Message::fromArray([
             'description' => PayloadExample::description(),
             'provider_states' => PayloadExample::providerStates(),
             'content' => '{"some": "value"}',
-            'metadata' => [],
+            'metadata' => ['some' => 'value'],
         ]);
 
-        $payload = $consumer->toArray();
+        Assert::assertSame('{"some": "value"}', $message->content());
+        Assert::assertSame(['some' => 'value'], $message->metadata());
 
+        $payload = $message->toArray();
         Assert::assertArrayHasKey('description', $payload);
         Assert::assertArrayHasKey('provider_states', $payload);
         Assert::assertArrayHasKey('content', $payload);
@@ -50,7 +52,7 @@ final class MessageTest extends TestCase
             'description' => PayloadExample::description(),
             'provider_states' => PayloadExample::providerStates(),
             'content' => '{"some": "value"}',
-            'metadata' => [],
+            'metadata' => ['some' => 'value'],
         ];
 
         yield from ValueObjectPayloadAssertion::string($perfectValues, 'description');
