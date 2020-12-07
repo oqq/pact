@@ -1,7 +1,12 @@
 {
     "name": "oqq/pact",
     "description": "TBD",
+    "type": "library",
     "license": "MIT",
+    "keywords": [
+        "pact",
+        "contract-testing"
+    ],
     "authors": [
         {
             "name": "Eric Braun",

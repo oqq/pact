@@ -150,3 +150,5 @@ jobs:
 
       - name: "Run Infection"
         run: "vendor/bin/infection"
+        env:
+          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
