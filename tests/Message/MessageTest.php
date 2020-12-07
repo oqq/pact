@@ -18,13 +18,16 @@ final class MessageTest extends TestCase
     public function testItCreatesFromDefinition(): void
     {
         $messageDefinition = MessageDefinition::fromArray(\array_replace(PayloadExample::message(), [
-            'content' => 'body',
+            'body' => [
+                'content' => '{"some": "value"}',
+                'matching_rules' => [],
+            ],
             'metadata' => ['metaAlpha' => 'data'],
         ]));
 
         $message = Message::fromMessageDefinition($messageDefinition);
 
-        Assert::assertSame('body', $message->body());
+        Assert::assertSame('{"some": "value"}', $message->body());
         Assert::assertSame(['metaAlpha' => 'data'], $message->headers());
     }
 }

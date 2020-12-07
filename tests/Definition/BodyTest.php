@@ -23,6 +23,9 @@ final class BodyTest extends TestCase
             ],
         ]);
 
+        Assert::assertSame('{"some_json_value": true}', $body->content());
+        Assert::assertNotEmpty($body->matchingRules()->toArray());
+
         $payload = $body->toArray();
 
         Assert::assertArrayHasKey('content', $payload);

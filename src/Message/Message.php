@@ -14,7 +14,7 @@ final class Message
     public static function fromMessageDefinition(MessageDefinition $messageDefinition): self
     {
         return new self(
-            $messageDefinition->content(),
+            $messageDefinition->body()->content(),
             $messageDefinition->metadata()
         );
     }

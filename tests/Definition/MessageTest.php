@@ -17,19 +17,23 @@ final class MessageTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $message = Message::fromArray([
-            'description' => PayloadExample::description(),
+            'description' => 'test',
             'provider_states' => PayloadExample::providerStates(),
-            'content' => '{"some": "value"}',
+            'body' => [
+                'content' => '{"some": "value"}',
+                'matching_rules' => [],
+            ],
             'metadata' => ['some' => 'value'],
         ]);
 
-        Assert::assertSame('{"some": "value"}', $message->content());
+        Assert::assertSame('test', $message->description()->value());
+        Assert::assertSame('{"some": "value"}', $message->body()->content());
         Assert::assertSame(['some' => 'value'], $message->metadata());
 
         $payload = $message->toArray();
         Assert::assertArrayHasKey('description', $payload);
         Assert::assertArrayHasKey('provider_states', $payload);
-        Assert::assertArrayHasKey('content', $payload);
+        Assert::assertArrayHasKey('body', $payload);
         Assert::assertArrayHasKey('metadata', $payload);
     }
 
@@ -51,13 +55,16 @@ final class MessageTest extends TestCase
         $perfectValues = [
             'description' => PayloadExample::description(),
             'provider_states' => PayloadExample::providerStates(),
-            'content' => '{"some": "value"}',
+            'body' => [
+                'content' => '{"some": "value"}',
+                'matching_rules' => [],
+            ],
             'metadata' => ['some' => 'value'],
         ];
 
         yield from ValueObjectPayloadAssertion::string($perfectValues, 'description');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'provider_states');
-        yield from ValueObjectPayloadAssertion::string($perfectValues, 'content');
+        yield from ValueObjectPayloadAssertion::array($perfectValues, 'body');
         yield from ValueObjectPayloadAssertion::map($perfectValues, 'metadata');
     }
 }

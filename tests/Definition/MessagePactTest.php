@@ -17,16 +17,18 @@ final class MessagePactTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $pact = MessagePact::fromArray([
-            'consumer' => PayloadExample::consumer(),
-            'provider' => PayloadExample::provider(),
-            'messages' => PayloadExample::messages(),
+            'consumer' => ['name' => 'test-consumer'],
+            'provider' => ['name' => 'test-provider'],
+            'messages' => [],
         ]);
 
-        $payload = $pact->toArray();
+        Assert::assertSame(['name' => 'test-consumer'], $pact->consumer()->toArray());
+        Assert::assertSame(['name' => 'test-provider'], $pact->provider()->toArray());
+        Assert::assertSame([], $pact->messages()->toArray());
 
-        Assert::assertArrayHasKey('consumer', $payload);
-        Assert::assertArrayHasKey('provider', $payload);
-        Assert::assertArrayHasKey('messages', $payload);
+        Assert::assertArrayHasKey('consumer', $pact->toArray());
+        Assert::assertArrayHasKey('provider', $pact->toArray());
+        Assert::assertArrayHasKey('messages', $pact->toArray());
     }
 
     /**

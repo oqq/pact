@@ -22,6 +22,7 @@ final class MessagesTest extends TestCase
         ]);
 
         Assert::assertContainsOnly('array', $messages->toArray());
+        Assert::assertCount(2, $messages);
     }
 
     /**

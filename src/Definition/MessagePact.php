@@ -39,6 +39,21 @@ final class MessagePact
         ];
     }
 
+    public function consumer(): Consumer
+    {
+        return $this->consumer;
+    }
+
+    public function provider(): Provider
+    {
+        return $this->provider;
+    }
+
+    public function messages(): Messages
+    {
+        return $this->messages;
+    }
+
     private function __construct(Consumer $consumer, Provider $provider, Messages $messages)
     {
         $this->consumer = $consumer;
