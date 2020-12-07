@@ -162,8 +162,11 @@ final class PayloadExample
         return [
             'description' => self::description(),
             'provider_states' => self::providerStates(),
-            'content' => '{"some": "value"}',
-            'metadata' => [],
+            'body' => [
+                'content' => '{"some": "value"}',
+                'matching_rules' => [],
+            ],
+            'metadata' => ['some' => 'value'],
         ];
     }
 
@@ -171,6 +174,15 @@ final class PayloadExample
     {
         return [
             self::message(),
+        ];
+    }
+
+    public static function messagePact(): array
+    {
+        return [
+            'consumer' => self::consumer(),
+            'provider' => self::provider(),
+            'messages' => self::messages(),
         ];
     }
 }

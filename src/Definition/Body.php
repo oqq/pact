@@ -32,6 +32,16 @@ final class Body
         ];
     }
 
+    public function content(): string
+    {
+        return $this->content;
+    }
+
+    public function matchingRules(): MatchingRules
+    {
+        return $this->matchingRules;
+    }
+
     private function __construct(string $content, MatchingRules $matchingRules)
     {
         $this->content = $content;

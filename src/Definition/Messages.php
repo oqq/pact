@@ -6,7 +6,7 @@ namespace Oqq\Pact\Definition;
 
 use Oqq\Pact\Util\Assert;
 
-final class Messages
+final class Messages implements \IteratorAggregate
 {
     /** @var list<Message> */
     private array $messages;
@@ -29,6 +29,11 @@ final class Messages
             static fn (Message $message): array => $message->toArray(),
             $this->messages
         );
+    }
+
+    public function getIterator(): \Traversable
+    {
+        yield from $this->messages;
     }
 
     private function __construct(Message ...$messages)

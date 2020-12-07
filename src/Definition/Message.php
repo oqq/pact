@@ -10,7 +10,7 @@ final class Message
 {
     private Description $description;
     private ProviderStates $providerStates;
-    private string $content;
+    private Body $body;
     private array $metadata;
 
     public static function fromArray(array $payload): self
@@ -21,16 +21,17 @@ final class Message
         Assert::keyExists($payload, 'provider_states');
         Assert::isArray($payload['provider_states']);
 
-        Assert::keyExists($payload, 'content');
-        Assert::string($payload['content']);
+        Assert::keyExists($payload, 'body');
+        Assert::isArray($payload['body']);
 
         Assert::keyExists($payload, 'metadata');
         Assert::isMap($payload['metadata']);
 
         $description = Description::fromString($payload['description']);
         $providerStates = ProviderStates::fromArray($payload['provider_states']);
+        $body = Body::fromArray($payload['body']);
 
-        return new self($description, $providerStates, $payload['content'], $payload['metadata']);
+        return new self($description, $providerStates, $body, $payload['metadata']);
     }
 
     public function toArray(): array
@@ -38,20 +39,35 @@ final class Message
         return [
             'description' => $this->description->value(),
             'provider_states' => $this->providerStates->toArray(),
-            'content' => $this->content,
+            'body' => $this->body->toArray(),
             'metadata' => $this->metadata,
         ];
+    }
+
+    public function description(): Description
+    {
+        return $this->description;
+    }
+
+    public function body(): Body
+    {
+        return $this->body;
+    }
+
+    public function metadata(): array
+    {
+        return $this->metadata;
     }
 
     private function __construct(
         Description $description,
         ProviderStates $providerStates,
-        string $content,
+        Body $body,
         array $metadata
     ) {
         $this->description = $description;
         $this->providerStates = $providerStates;
-        $this->content = $content;
+        $this->body = $body;
         $this->metadata = $metadata;
     }
 }
