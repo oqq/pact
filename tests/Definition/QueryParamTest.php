@@ -16,12 +16,12 @@ final class QueryParamTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $body = QueryParam::fromArray([
+        $queryParam = QueryParam::fromArray([
             'values' =>  ['x', 'y'],
             'matching_rule' => PayloadExample::matchingRule(),
         ]);
 
-        $payload = $body->toArray();
+        $payload = $queryParam->toArray();
 
         Assert::assertArrayHasKey('values', $payload);
         Assert::assertSame(['x', 'y'], $payload['values']);

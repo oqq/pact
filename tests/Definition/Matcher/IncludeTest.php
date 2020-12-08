@@ -18,7 +18,7 @@ final class IncludeTest extends TestCase
     {
         $matcher = Include_::fromArray([
             'type' =>  'include',
-            'include' => 'something',
+            'value' => 'something',
         ]);
 
         $payload = $matcher->toArray();
@@ -26,8 +26,8 @@ final class IncludeTest extends TestCase
         Assert::assertArrayHasKey('type', $payload);
         Assert::assertSame('include', $payload['type']);
 
-        Assert::assertArrayHasKey('include', $payload);
-        Assert::assertSame('something', $payload['include']);
+        Assert::assertArrayHasKey('value', $payload);
+        Assert::assertSame('something', $payload['value']);
     }
 
 
@@ -61,18 +61,18 @@ final class IncludeTest extends TestCase
             ],
         ];
 
-        yield 'missing include' => [
-            new InvalidArgumentException('Expected the key "include" to exist.'),
+        yield 'missing value' => [
+            new InvalidArgumentException('Expected the key "value" to exist.'),
             [
                 'type' => 'include',
             ],
         ];
 
-        yield 'invalid include' => [
+        yield 'invalid value' => [
             new InvalidArgumentException('Expected a string. Got: integer'),
             [
                 'type' => 'include',
-                'include' => 5,
+                'value' => 5,
             ],
         ];
     }

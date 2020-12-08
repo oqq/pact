@@ -16,12 +16,12 @@ final class PathTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = Path::fromArray([
+        $path = Path::fromArray([
             'value' =>  '/',
             'matching_rule' => PayloadExample::matchingRule(),
         ]);
 
-        $payload = $consumer->toArray();
+        $payload = $path->toArray();
 
         Assert::assertArrayHasKey('value', $payload);
         Assert::assertSame('/', $payload['value']);

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Oqq\PactTest\Definition;
 
 use Oqq\Pact\Definition\Query;
-use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -16,11 +15,11 @@ final class QueryTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $body = Query::fromArray([
+        $query = Query::fromArray([
             'terms' => PayloadExample::queryParam(),
         ]);
 
-        $payload = $body->toArray();
+        $payload = $query->toArray();
 
         Assert::assertArrayHasKey('terms', $payload);
         Assert::assertIsArray($payload['terms']);

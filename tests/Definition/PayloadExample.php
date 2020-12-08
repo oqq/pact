@@ -33,7 +33,7 @@ final class PayloadExample
             'value' => '/',
             'matching_rule' => [
                 'matchers' => [
-                    ['type' => 'include', 'include' => '/'],
+                    ['type' => 'include', 'value' => '/'],
                 ],
             ],
         ];
@@ -65,7 +65,7 @@ final class PayloadExample
                 'value' => 'application/json;charset=UTF-8',
                 'matching_rule' => [
                     'matchers' => [
-                        ['type' => 'include', 'include' => 'application/json'],
+                        ['type' => 'include', 'value' => 'application/json'],
                     ],
                 ],
             ],

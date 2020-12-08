@@ -18,7 +18,7 @@ final class RegexTest extends TestCase
     {
         $matcher = Regex::fromArray([
             'type' =>  'regex',
-            'regex' => '/.+/',
+            'pattern' => '/.+/',
         ]);
 
         $payload = $matcher->toArray();
@@ -26,8 +26,8 @@ final class RegexTest extends TestCase
         Assert::assertArrayHasKey('type', $payload);
         Assert::assertSame('regex', $payload['type']);
 
-        Assert::assertArrayHasKey('regex', $payload);
-        Assert::assertSame('/.+/', $payload['regex']);
+        Assert::assertArrayHasKey('pattern', $payload);
+        Assert::assertSame('/.+/', $payload['pattern']);
     }
 
 
@@ -58,18 +58,18 @@ final class RegexTest extends TestCase
             ],
         ];
 
-        yield 'missing regex' => [
-            new InvalidArgumentException('Expected the key "regex" to exist.'),
+        yield 'missing pattern' => [
+            new InvalidArgumentException('Expected the key "pattern" to exist.'),
             [
                 'type' => 'regex',
             ],
         ];
 
-        yield 'invalid regex' => [
+        yield 'invalid pattern' => [
             new InvalidArgumentException('Expected a string. Got: integer'),
             [
                 'type' => 'regex',
-                'regex' => 5,
+                'pattern' => 5,
             ],
         ];
     }

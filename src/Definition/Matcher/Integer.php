@@ -25,4 +25,8 @@ final class Integer extends Matcher
             'type' => self::MATCH_TYPE,
         ];
     }
+
+    private function __construct()
+    {
+    }
 }
