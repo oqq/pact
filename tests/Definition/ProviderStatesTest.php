@@ -6,7 +6,6 @@ namespace Oqq\PactTest\Definition;
 
 use Oqq\Pact\Definition\ProviderStates;
 use Oqq\Pact\Exception\InvalidArgumentException;
-use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +19,10 @@ final class ProviderStatesTest extends TestCase
      */
     public function testItWillCreateFromPerfectPayload(array $payloadExample): void
     {
-        $state = ProviderStates::fromArray($payloadExample);
+        $states = ProviderStates::fromArray($payloadExample);
 
-        Assert::assertCount(\count($payloadExample), $state->toArray());
-        Assert::assertContainsOnly('array', $state->toArray());
+        Assert::assertCount(\count($payloadExample), $states->toArray());
+        Assert::assertContainsOnly('array', $states->toArray());
     }
 
     /**

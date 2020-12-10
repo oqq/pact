@@ -11,29 +11,29 @@ final class Include_ extends Matcher
 {
     public const MATCH_TYPE = 'include';
 
-    private string $include;
+    private string $value;
 
     public static function fromArray(array $payload): self
     {
         Assert::keyExists($payload, 'type');
         Assert::same($payload['type'], self::MATCH_TYPE);
 
-        Assert::keyExists($payload, 'include');
-        Assert::string($payload['include']);
+        Assert::keyExists($payload, 'value');
+        Assert::string($payload['value']);
 
-        return new self($payload['include']);
+        return new self($payload['value']);
     }
 
     public function toArray(): array
     {
         return [
             'type' => self::MATCH_TYPE,
-            'include' => $this->include,
+            'value' => $this->value,
         ];
     }
 
-    private function __construct(string $include)
+    private function __construct(string $value)
     {
-        $this->include = $include;
+        $this->value = $value;
     }
 }

@@ -25,4 +25,8 @@ final class Equality extends Matcher
             'type' => self::MATCH_TYPE,
         ];
     }
+
+    private function __construct()
+    {
+    }
 }

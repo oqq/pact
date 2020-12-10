@@ -16,9 +16,9 @@ final class MethodTest extends TestCase
 {
     public function testItWillCreateFromPerfectValue(): void
     {
-        $status = Method::fromString('GET');
+        $method = Method::fromString('GET');
 
-        Assert::assertSame('GET', $status->value());
+        Assert::assertSame('GET', $method->value());
     }
 
     public function testItWillThrowWithEmptyValue(): void

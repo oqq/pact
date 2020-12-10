@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": "7.4.* | 8.0.*",
+        "ext-json": "*",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
@@ -36,5 +37,8 @@
         "psr-4": {
             "Oqq\\PactTest\\": "tests/"
         }
+    },
+    "scripts": {
+
     }
 }

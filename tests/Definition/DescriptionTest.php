@@ -16,9 +16,9 @@ final class DescriptionTest extends TestCase
 {
     public function testItWillCreateFromPerfectValue(): void
     {
-        $status = Description::fromString('test');
+        $description = Description::fromString('test');
 
-        Assert::assertSame('test', $status->value());
+        Assert::assertSame('test', $description->value());
     }
 
     public function testItWillThrowWithEmptyValue(): void

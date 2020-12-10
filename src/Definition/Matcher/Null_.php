@@ -25,4 +25,8 @@ final class Null_ extends Matcher
             'type' => self::MATCH_TYPE,
         ];
     }
+
+    private function __construct()
+    {
+    }
 }

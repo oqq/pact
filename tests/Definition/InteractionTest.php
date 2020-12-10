@@ -16,14 +16,14 @@ final class InteractionTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = Interaction::fromArray([
+        $interaction = Interaction::fromArray([
             'description' => PayloadExample::description(),
             'provider_states' => PayloadExample::providerStates(),
             'consumer_request' => PayloadExample::consumerRequest(),
             'provider_response' => PayloadExample::providerResponse(),
         ]);
 
-        $payload = $consumer->toArray();
+        $payload = $interaction->toArray();
 
         Assert::assertArrayHasKey('description', $payload);
         Assert::assertArrayHasKey('provider_states', $payload);

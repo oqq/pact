@@ -16,7 +16,7 @@ final class ConsumerRequestTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = ConsumerRequest::fromArray([
+        $request = ConsumerRequest::fromArray([
             'method' =>  PayloadExample::method(),
             'path' => PayloadExample::path(),
             'query' => PayloadExample::query(),
@@ -24,7 +24,7 @@ final class ConsumerRequestTest extends TestCase
             'body' => PayloadExample::body(),
         ]);
 
-        $payload = $consumer->toArray();
+        $payload = $request->toArray();
 
         Assert::assertArrayHasKey('method', $payload);
         Assert::assertArrayHasKey('path', $payload);

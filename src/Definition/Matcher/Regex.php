@@ -11,29 +11,29 @@ final class Regex extends Matcher
 {
     public const MATCH_TYPE = 'regex';
 
-    private string $regex;
+    private string $pattern;
 
     public static function fromArray(array $payload): self
     {
         Assert::keyExists($payload, 'type');
         Assert::same($payload['type'], self::MATCH_TYPE);
 
-        Assert::keyExists($payload, 'regex');
-        Assert::string($payload['regex']);
+        Assert::keyExists($payload, 'pattern');
+        Assert::string($payload['pattern']);
 
-        return new self($payload['regex']);
+        return new self($payload['pattern']);
     }
 
     public function toArray(): array
     {
         return [
             'type' => self::MATCH_TYPE,
-            'regex' => $this->regex,
+            'pattern' => $this->pattern,
         ];
     }
 
-    private function __construct(string $regex)
+    private function __construct(string $pattern)
     {
-        $this->regex = $regex;
+        $this->pattern = $pattern;
     }
 }

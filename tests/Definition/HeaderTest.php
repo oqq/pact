@@ -16,12 +16,12 @@ final class HeaderTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = Header::fromArray([
+        $header = Header::fromArray([
             'value' =>  'application/json;charset=UTF-8',
             'matching_rule' => PayloadExample::matchingRule(),
         ]);
 
-        $payload = $consumer->toArray();
+        $payload = $header->toArray();
 
         Assert::assertArrayHasKey('value', $payload);
         Assert::assertSame('application/json;charset=UTF-8', $payload['value']);

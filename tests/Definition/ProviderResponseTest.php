@@ -16,13 +16,13 @@ final class ProviderResponseTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $providerResponse = ProviderResponse::fromArray([
+        $response = ProviderResponse::fromArray([
             'status' =>  PayloadExample::status(),
             'headers' => PayloadExample::headers(),
             'body' => PayloadExample::body(),
         ]);
 
-        $payload = $providerResponse->toArray();
+        $payload = $response->toArray();
 
         Assert::assertArrayHasKey('status', $payload);
         Assert::assertIsInt($payload['status']);

@@ -16,11 +16,11 @@ final class ProviderTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $consumer = Provider::fromArray([
+        $provider = Provider::fromArray([
             'name' =>  'test',
         ]);
 
-        $payload = $consumer->toArray();
+        $payload = $provider->toArray();
 
         Assert::assertArrayHasKey('name', $payload);
         Assert::assertSame('test', $payload['name']);
