@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oqq\PactTest\PactBuilder;
 
+use Oqq\Pact\Definition\MatchingRules;
 use Oqq\Pact\PactBuilder\JsonPatternBuilder;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -17,81 +18,17 @@ final class JsonPatternBuilderTest extends TestCase
     {
         $builder = new JsonPatternBuilder();
         $builder = $builder->withPattern([
-            'only' => 'value',
-            'type' => $builder->like('value'),
-            'deep_only' => $builder->eachLike([
-                'some' => 'value',
-            ]),
-            'deep_type' => $builder->eachLike([
-                'type' => $builder->like('value'),
-                'some' => $builder->term('value', '/.*/'),
-            ]),
-            'some' => $builder->term('value', '/.*/'),
-            'another' => [
-                'deep' => $builder->term('value', '/.*/'),
-            ],
-            'array' => [
-                $builder->term('value', '/.*/'),
-            ],
+            'some' => 'value',
         ]);
 
         $body = $builder->build();
 
         Assert::assertSame(
-            '{"only":"value","type":"value","deep_only":{"some":"value"},"deep_type":{"type":"value","some":"value"},"some":"value","another":{"deep":"value"},"array":["value"]}',
+            '{"some":"value"}',
             $body->content()
         );
 
-        Assert::assertSame([
-            '$.type' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'type'],
-                ],
-            ],
-            '$.deep_only' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'collection', 'min' => 1],
-                ],
-            ],
-            '$.deep_type' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'collection', 'min' => 1],
-                ],
-            ],
-            '$.deep_type.type' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'type'],
-                ],
-            ],
-            '$.deep_type.some' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'regex', 'pattern' => '/.*/'],
-                ],
-            ],
-            '$.some' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'regex', 'pattern' => '/.*/'],
-                ],
-            ],
-            '$.another.deep' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'regex', 'pattern' => '/.*/'],
-                ],
-            ],
-            '$.array[0]' => [
-                'combine' => 'AND',
-                'matchers' => [
-                    ['type' => 'regex', 'pattern' => '/.*/'],
-                ],
-            ],
-        ], $body->matchingRules()->toArray());
+        Assert::assertSame([], $body->matchingRules()->toArray());
     }
 
     public function testItIsImmutable(): void
@@ -99,5 +36,213 @@ final class JsonPatternBuilderTest extends TestCase
         $builder = new JsonPatternBuilder();
 
         Assert::assertNotSame($builder, $builder->withPattern([]));
+    }
+
+    public function testItGeneratesWithSimplePattern(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'some' => [
+                'deep' => 'value',
+            ],
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'some' => [
+                'deep' => 'value',
+            ],
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+        ])->toArray(), $body->matchingRules()->toArray());
+    }
+
+    public function testItGeneratesWithTypePattern(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'some' => $builder->like('value'),
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'some' => 'value',
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+            '$.some' => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+        ])->toArray(), $body->matchingRules()->toArray());
+    }
+
+    public function testItGeneratesWithExpressionPattern(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'some' => $builder->term('value', '/.*/'),
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'some' => 'value',
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+            '$.some' => [
+                'matchers' => [
+                    ['type' => 'regex', 'pattern' => '/.*/'],
+                ],
+            ],
+        ])->toArray(), $body->matchingRules()->toArray());
+    }
+
+    public function testItGeneratesWithArrayPattern(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'each_like' => $builder->eachLike(
+                $builder->like(1),
+            ),
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'each_like' => [1],
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+            '$.each_like' => [
+                'matchers' => [
+                    ['type' => 'collection', 'min' => 1],
+                ],
+            ],
+            '$.each_like[*]' => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+        ])->toArray(), $body->matchingRules()->toArray());
+    }
+
+    public function testItGeneratesWithObjectPattern(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'each_like' => $builder->eachLike([
+                'value' => $builder->like(1),
+            ]),
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'each_like' => [
+                ['value' => 1],
+            ],
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+            '$.each_like' => [
+                'matchers' => [
+                    ['type' => 'collection', 'min' => 1],
+                ],
+            ],
+            '$.each_like.*.value' => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+        ])->toArray(), $body->matchingRules()->toArray());
+    }
+
+    public function testItGeneratesWithPaths(): void
+    {
+        $builder = new JsonPatternBuilder();
+        $builder = $builder->withPattern([
+            'array' => [
+                $builder->like(1),
+                $builder->like(2),
+            ],
+            '.' => [
+                '[' => $builder->like(1),
+                ']' => $builder->like(1),
+            ],
+            'object' => [
+                '(' => $builder->like(1),
+                ')' => $builder->like(1),
+            ],
+            '"' => $builder->like(1),
+            "'" => $builder->like(1),
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame(\json_encode([
+            'array' => [
+                1,
+                2
+            ],
+            '.' => [
+                '[' => 1,
+                ']' => 1,
+            ],
+            'object' => [
+                '(' => 1,
+                ')' => 1,
+            ],
+            '"' => 1,
+            "'" => 1,
+        ], \JSON_THROW_ON_ERROR), $body->content());
+
+        Assert::assertSame(MatchingRules::fromArray([
+            "$.array[0]" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            '$.array[1]' => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$['.']['[']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$['.'][']']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$.object['(']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$.object[')']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$['\"']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            "$['\'']" => [
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+        ])->toArray(), $body->matchingRules()->toArray());
     }
 }

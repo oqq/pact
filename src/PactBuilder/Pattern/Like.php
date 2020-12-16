@@ -7,22 +7,22 @@ namespace Oqq\Pact\PactBuilder\Pattern;
 use Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\PactBuilder\Pattern;
 
+/**
+ * @psalm-import-type JsonPatternType from Pattern
+ */
 final class Like implements Pattern
 {
-    /** @var null|scalar|array<null|scalar|array> */
+    /** @var JsonPatternType */
     private $generate;
 
     /**
-     * @param null|scalar|array<null|scalar|array> $generate
+     * @param JsonPatternType $generate
      */
     public static function generateFromValue($generate): self
     {
         return new self($generate);
     }
 
-    /**
-     * @return null|scalar|array<null|scalar|array>
-     */
     public function generate()
     {
         return $this->generate;
@@ -36,7 +36,7 @@ final class Like implements Pattern
     }
 
     /**
-     * @param null|scalar|array<null|scalar|array> $generate
+     * @param JsonPatternType $generate
      */
     private function __construct($generate)
     {

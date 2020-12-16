@@ -8,14 +8,17 @@ use Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\PactBuilder\Pattern;
 use Oqq\Pact\Util\Assert;
 
+/**
+ * @psalm-import-type JsonPatternType from Pattern
+ */
 final class EachLike implements Pattern
 {
-    /** @var null|scalar|array<null|scalar|array|Pattern>|Pattern */
+    /** @var JsonPatternType */
     private $generate;
     private int $min;
 
     /**
-     * @param null|scalar|array<null|scalar|array|Pattern>|Pattern $generate
+     * @param JsonPatternType $generate
      */
     public static function generateFromValue($generate, int $min): self
     {
@@ -24,9 +27,6 @@ final class EachLike implements Pattern
         return new self($generate, $min);
     }
 
-    /**
-     * @return null|scalar|array<null|scalar|array|Pattern>|Pattern
-     */
     public function generate()
     {
         return $this->generate;
@@ -41,7 +41,7 @@ final class EachLike implements Pattern
     }
 
     /**
-     * @param null|scalar|array<null|scalar|array|Pattern>|Pattern $generate
+     * @param JsonPatternType $generate
      */
     private function __construct($generate, int $min)
     {

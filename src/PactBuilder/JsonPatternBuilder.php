@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace Oqq\Pact\PactBuilder;
 
 use Oqq\Pact\Definition\Body;
+use Oqq\Pact\PactBuilder\Pattern\EachLike;
 
+/**
+ * @psalm-import-type JsonPatternType from Pattern
+ */
 final class JsonPatternBuilder
 {
-    /** @var array<null|scalar|array|Pattern> */
+    /** @var array<JsonPatternType> */
     private array $content = [];
 
     /**
-     * @param array<null|scalar|array|Pattern> $content
+     * @param array<JsonPatternType> $content
      */
     public function withPattern(array $content): self
     {
@@ -24,17 +28,19 @@ final class JsonPatternBuilder
 
     public function build(): Body
     {
-        $matchingRules = [];
-        $content = self::extractMatchingRules($this->content, '$', $matchingRules);
+        $matchers = new MatcherCollector();
+        $content = self::extractRecursiveMatchingRules($this->content, '$', $matchers);
 
-        return Body::fromArray([
-            'content' => \json_encode($content, \JSON_THROW_ON_ERROR),
-            'matching_rules' => $matchingRules,
-        ]);
+        return Body::fromArray(
+            [
+                'content' => \json_encode($content, \JSON_THROW_ON_ERROR),
+                'matching_rules' => $matchers->generateMatchingRules(),
+            ]
+        );
     }
 
     /**
-     * @param null|scalar|array<null|scalar|array> $value
+     * @param null|scalar|array $value
      */
     public function like($value): Pattern\Like
     {
@@ -42,7 +48,7 @@ final class JsonPatternBuilder
     }
 
     /**
-     * @param null|scalar|array<null|scalar|array|Pattern>|Pattern $value
+     * @param JsonPatternType $value
      */
     public function eachLike($value, int $min = 1): Pattern\EachLike
     {
@@ -55,26 +61,47 @@ final class JsonPatternBuilder
     }
 
     /**
-     * @param array<null|scalar|array|Pattern> $contents
+     * @param array<JsonPatternType> $contents
+     * @return array<null|scalar|array>
      */
-    private static function extractMatchingRules(array $contents, string $path, array &$matchingRules): array
+    private static function extractRecursiveMatchingRules(array $contents, string $path, MatcherCollector $matchers): array
     {
-        foreach ($contents as $key => &$content) {
-            if ($content instanceof Pattern) {
-                $matchingRules[self::createPath($path, $key)] = [
-                    'matchers' => [
-                        $content->matcher()->toArray(),
-                    ],
-                ];
-                $content = $content->generate();
-            }
+        $values = [];
 
-            if (\is_array($content)) {
-                $content = self::extractMatchingRules($content, self::createPath($path, $key), $matchingRules);
-            }
+        foreach ($contents as $key => $content) {
+            $values[$key] = self::extractMatchingRules($content, self::createPath($path, $key), $matchers);
         }
 
-        return $contents;
+        return $values;
+    }
+
+    /**
+     * @param array<JsonPatternType>|JsonPatternType $content
+     * @return null|scalar|array
+     */
+    private static function extractMatchingRules($content, string $path, MatcherCollector $matchers)
+    {
+        if (\is_array($content)) {
+            /** @var array<JsonPatternType> $content */
+            return self::extractRecursiveMatchingRules($content, $path, $matchers);
+        }
+
+        if ($content instanceof EachLike) {
+            $matchers->addMatcher($path, $content->matcher());
+
+            $content = $content->generate();
+            $path .= \is_array($content) ? '.*' : '[*]';
+
+            return [self::extractMatchingRules($content, $path, $matchers)];
+        }
+
+        if ($content instanceof Pattern) {
+            $matchers->addMatcher($path, $content->matcher());
+
+            return self::extractMatchingRules($content->generate(), $path, $matchers);
+        }
+
+        return $content;
     }
 
     /**
@@ -82,10 +109,14 @@ final class JsonPatternBuilder
      */
     private static function createPath(string $path, $key): string
     {
-        if (\is_string($key)) {
-            return \sprintf('%s.%s', $path, $key);
+        if (\is_numeric($key)) {
+            return \sprintf('%s[%s]', $path, $key);
         }
 
-        return \sprintf('%s[%s]', $path, $key);
+        if (false !== \strpbrk($key, '.[]()"\'')) {
+            return \sprintf("%s['%s']", $path, \str_replace('\'', '\\\'', $key));
+        }
+
+        return \sprintf('%s.%s', $path, $key);
     }
 }

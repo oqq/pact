@@ -6,10 +6,13 @@ namespace Oqq\Pact\PactBuilder;
 
 use Oqq\Pact\Definition\Matcher;
 
+/**
+ * @psalm-type JsonPatternType null|scalar|array|Pattern
+ */
 interface Pattern
 {
     /**
-     * @return null|scalar|array<null|scalar|array|Pattern>|Pattern
+     * @return JsonPatternType
      */
     public function generate();
 
