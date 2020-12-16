@@ -20,6 +20,8 @@ final class TypeTest extends TestCase
             'type' =>  'type',
         ]);
 
+        Assert::assertSame('type', $matcher->type());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

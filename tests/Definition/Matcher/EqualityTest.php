@@ -20,6 +20,8 @@ final class EqualityTest extends TestCase
             'type' =>  'equality',
         ]);
 
+        Assert::assertSame('equality', $matcher->type());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

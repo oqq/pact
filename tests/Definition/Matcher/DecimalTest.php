@@ -20,6 +20,8 @@ final class DecimalTest extends TestCase
             'type' =>  'decimal',
         ]);
 
+        Assert::assertSame('decimal', $matcher->type());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

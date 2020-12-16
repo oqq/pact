@@ -52,6 +52,14 @@ final class MatchingRuleTest extends TestCase
         ];
     }
 
+    public function testItUsesDefaultCombineMethod(): void
+    {
+        $rule = MatchingRule::fromArray(['matchers' => []]);
+
+        Assert::assertSame('AND', $rule->combine());
+        Assert::assertSame([], $rule->matchers());
+    }
+
     /**
      * @dataProvider invalidPayloadProvider
      */

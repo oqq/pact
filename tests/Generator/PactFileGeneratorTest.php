@@ -56,7 +56,14 @@ final class PactFileGeneratorTest extends TestCase
                     'provider_states' => [],
                     'body' => [
                         'content' => '{"some": "value}',
-                        'matching_rules' => [],
+                        'matching_rules' => [
+                            '$.some' => [
+                                'matchers' => [
+                                    ['type' => 'regex', 'pattern' => '/[a-z]+/'],
+                                    ['type' => 'include', 'value' => 'val'],
+                                ],
+                            ],
+                        ],
                     ],
                     'metadata' => [],
                 ],
@@ -65,7 +72,13 @@ final class PactFileGeneratorTest extends TestCase
                     'provider_states' => [],
                     'body' => [
                         'content' => '{"some": "value}',
-                        'matching_rules' => [],
+                        'matching_rules' => [
+                            '$.some' => [
+                                'matchers' => [
+                                    ['type' => 'type'],
+                                ],
+                            ],
+                        ],
                     ],
                     'metadata' => [],
                 ],
@@ -89,7 +102,15 @@ final class PactFileGeneratorTest extends TestCase
                    'contents' => '{"some": "value}',
                    'metaData' => [],
                    'matchingRules' => [
-                       'body' => [],
+                       'body' => [
+                           '$.some' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['match' => 'regex', 'regex' => '/[a-z]+/'],
+                                   ['match' => 'include', 'include' => 'val'],
+                               ],
+                           ],
+                       ],
                    ],
                ],
                [
@@ -98,7 +119,14 @@ final class PactFileGeneratorTest extends TestCase
                    'contents' => '{"some": "value}',
                    'metaData' => [],
                    'matchingRules' => [
-                       'body' => [],
+                       'body' => [
+                           '$.some' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['match' => 'type'],
+                               ],
+                           ],
+                       ],
                    ],
                ],
            ],

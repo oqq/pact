@@ -32,6 +32,16 @@ final class Regex extends Matcher
         ];
     }
 
+    public function type(): string
+    {
+        return self::MATCH_TYPE;
+    }
+
+    public function pattern(): string
+    {
+        return $this->pattern;
+    }
+
     private function __construct(string $pattern)
     {
         $this->pattern = $pattern;

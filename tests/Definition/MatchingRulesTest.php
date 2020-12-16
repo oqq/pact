@@ -16,13 +16,15 @@ final class MatchingRulesTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $rules = MatchingRules::fromArray([
-            'body' => PayloadExample::matchingRule(),
+            '$.some' => PayloadExample::matchingRule(),
         ]);
 
         $payload = $rules->toArray();
 
-        Assert::assertArrayHasKey('body', $payload);
-        Assert::assertIsArray($payload['body']);
+        Assert::assertArrayHasKey('$.some', $payload);
+        Assert::assertIsArray($payload['$.some']);
+
+        Assert::assertArrayHasKey('$.some', \iterator_to_array($rules));
     }
 
     /**

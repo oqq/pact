@@ -21,6 +21,9 @@ final class RegexTest extends TestCase
             'pattern' => '/.+/',
         ]);
 
+        Assert::assertSame('regex', $matcher->type());
+        Assert::assertSame('/.+/', $matcher->pattern());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

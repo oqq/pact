@@ -26,6 +26,11 @@ final class Null_ extends Matcher
         ];
     }
 
+    public function type(): string
+    {
+        return self::MATCH_TYPE;
+    }
+
     private function __construct()
     {
     }

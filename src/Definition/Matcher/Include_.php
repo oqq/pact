@@ -32,6 +32,16 @@ final class Include_ extends Matcher
         ];
     }
 
+    public function type(): string
+    {
+        return self::MATCH_TYPE;
+    }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
+
     private function __construct(string $value)
     {
         $this->value = $value;

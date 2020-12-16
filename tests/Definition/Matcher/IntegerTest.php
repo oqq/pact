@@ -20,6 +20,8 @@ final class IntegerTest extends TestCase
             'type' =>  'integer',
         ]);
 
+        Assert::assertSame('integer', $matcher->type());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

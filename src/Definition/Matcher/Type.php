@@ -26,6 +26,11 @@ final class Type extends Matcher
         ];
     }
 
+    public function type(): string
+    {
+        return self::MATCH_TYPE;
+    }
+
     private function __construct()
     {
     }

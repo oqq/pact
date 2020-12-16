@@ -31,7 +31,18 @@ abstract class Matcher
         return $matcher::fromArray($payload);
     }
 
+    /**
+     * @param array&array{type: key-of<self::MATCHER_TYPES>} $payload
+     */
     abstract public static function fromArray(array $payload): self;
 
+    /**
+     * @return array&array{type: key-of<self::MATCHER_TYPES>}
+     */
     abstract public function toArray(): array;
+
+    /**
+     * @return key-of<self::MATCHER_TYPES>
+     */
+    abstract public function type(): string;
 }

@@ -21,6 +21,9 @@ final class IncludeTest extends TestCase
             'value' => 'something',
         ]);
 
+        Assert::assertSame('include', $matcher->type());
+        Assert::assertSame('something', $matcher->value());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

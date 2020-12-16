@@ -20,6 +20,8 @@ final class NullTest extends TestCase
             'type' =>  'null',
         ]);
 
+        Assert::assertSame('null', $matcher->type());
+
         $payload = $matcher->toArray();
 
         Assert::assertArrayHasKey('type', $payload);

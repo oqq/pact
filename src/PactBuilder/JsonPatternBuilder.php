@@ -8,8 +8,12 @@ use Oqq\Pact\Definition\Body;
 
 final class JsonPatternBuilder
 {
+    /** @var array<null|scalar|array|Term> */
     private array $content = [];
 
+    /**
+     * @param array<null|scalar|array|Term> $content
+     */
     public function withPattern(array $content): self
     {
         $clone = clone $this;
@@ -34,6 +38,9 @@ final class JsonPatternBuilder
         return Term::generateWithPattern($value, $pattern);
     }
 
+    /**
+     * @param array<null|scalar|array|Term> $contents
+     */
     private static function extractMatchingRules(array $contents, string $path, array &$matchingRules): array
     {
         foreach ($contents as $key => &$content) {
