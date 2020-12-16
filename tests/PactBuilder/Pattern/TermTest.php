@@ -2,24 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Oqq\PactTest\PactBuilder;
+namespace Oqq\PactTest\PactBuilder\Pattern;
 
+use Oqq\Pact\Definition\Matcher\Regex;
 use Oqq\Pact\Exception\InvalidArgumentException;
-use Oqq\Pact\PactBuilder\Term;
+use Oqq\Pact\PactBuilder\Pattern\Term;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Oqq\Pact\PactBuilder\Term
+ * @covers \Oqq\Pact\PactBuilder\Pattern\Term
  */
 final class TermTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $term = Term::generateWithPattern('value', '/.*/');
+        $pattern = Term::generateWithPattern('value', '/.*/');
 
-        Assert::assertSame('value', $term->generate());
-        Assert::assertSame('/.*/', $term->pattern());
+        Assert::assertSame('value', $pattern->generate());
+
+        $matcher = $pattern->matcher();
+        Assert::assertInstanceOf(Regex::class, $matcher);
+        Assert::assertSame('/.*/', $matcher->pattern());
     }
 
     public function testItThrowsWithInvalidPattern(): void

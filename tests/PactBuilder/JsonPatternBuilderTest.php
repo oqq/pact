@@ -18,6 +18,14 @@ final class JsonPatternBuilderTest extends TestCase
         $builder = new JsonPatternBuilder();
         $builder = $builder->withPattern([
             'only' => 'value',
+            'type' => $builder->like('value'),
+            'deep_only' => $builder->eachLike([
+                'some' => 'value',
+            ]),
+            'deep_type' => $builder->eachLike([
+                'type' => $builder->like('value'),
+                'some' => $builder->term('value', '/.*/'),
+            ]),
             'some' => $builder->term('value', '/.*/'),
             'another' => [
                 'deep' => $builder->term('value', '/.*/'),
@@ -29,8 +37,42 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame('{"only":"value","some":"value","another":{"deep":"value"},"array":["value"]}', $body->content());
+        Assert::assertSame(
+            '{"only":"value","type":"value","deep_only":{"some":"value"},"deep_type":{"type":"value","some":"value"},"some":"value","another":{"deep":"value"},"array":["value"]}',
+            $body->content()
+        );
+
         Assert::assertSame([
+            '$.type' => [
+                'combine' => 'AND',
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            '$.deep_only' => [
+                'combine' => 'AND',
+                'matchers' => [
+                    ['type' => 'collection', 'min' => 1],
+                ],
+            ],
+            '$.deep_type' => [
+                'combine' => 'AND',
+                'matchers' => [
+                    ['type' => 'collection', 'min' => 1],
+                ],
+            ],
+            '$.deep_type.type' => [
+                'combine' => 'AND',
+                'matchers' => [
+                    ['type' => 'type'],
+                ],
+            ],
+            '$.deep_type.some' => [
+                'combine' => 'AND',
+                'matchers' => [
+                    ['type' => 'regex', 'pattern' => '/.*/'],
+                ],
+            ],
             '$.some' => [
                 'combine' => 'AND',
                 'matchers' => [

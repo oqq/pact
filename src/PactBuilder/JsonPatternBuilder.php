@@ -8,11 +8,11 @@ use Oqq\Pact\Definition\Body;
 
 final class JsonPatternBuilder
 {
-    /** @var array<null|scalar|array|Term> */
+    /** @var array<null|scalar|array|Pattern> */
     private array $content = [];
 
     /**
-     * @param array<null|scalar|array|Term> $content
+     * @param array<null|scalar|array|Pattern> $content
      */
     public function withPattern(array $content): self
     {
@@ -33,32 +33,44 @@ final class JsonPatternBuilder
         ]);
     }
 
-    public function term(string $value, string $pattern): Term
+    /**
+     * @param null|scalar|array<null|scalar|array> $value
+     */
+    public function like($value): Pattern\Like
     {
-        return Term::generateWithPattern($value, $pattern);
+        return Pattern\Like::generateFromValue($value);
     }
 
     /**
-     * @param array<null|scalar|array|Term> $contents
+     * @param null|scalar|array<null|scalar|array|Pattern>|Pattern $value
+     */
+    public function eachLike($value, int $min = 1): Pattern\EachLike
+    {
+        return Pattern\EachLike::generateFromValue($value, $min);
+    }
+
+    public function term(string $value, string $pattern): Pattern\Term
+    {
+        return Pattern\Term::generateWithPattern($value, $pattern);
+    }
+
+    /**
+     * @param array<null|scalar|array|Pattern> $contents
      */
     private static function extractMatchingRules(array $contents, string $path, array &$matchingRules): array
     {
         foreach ($contents as $key => &$content) {
-            if (\is_array($content)) {
-                $content = self::extractMatchingRules($content, self::createPath($path, $key), $matchingRules);
-                continue;
-            }
-
-            if ($content instanceof Term) {
+            if ($content instanceof Pattern) {
                 $matchingRules[self::createPath($path, $key)] = [
                     'matchers' => [
-                        [
-                            'type' => 'regex',
-                            'pattern' => $content->pattern(),
-                        ],
+                        $content->matcher()->toArray(),
                     ],
                 ];
                 $content = $content->generate();
+            }
+
+            if (\is_array($content)) {
+                $content = self::extractMatchingRules($content, self::createPath($path, $key), $matchingRules);
             }
         }
 

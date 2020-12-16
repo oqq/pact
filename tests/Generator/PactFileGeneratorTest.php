@@ -55,7 +55,7 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test alpha',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": "value}',
+                        'content' => '{"some": "value"}',
                         'matching_rules' => [
                             '$.some' => [
                                 'matchers' => [
@@ -71,9 +71,14 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test beta',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": "value}',
+                        'content' => '{"some": [{"deep": "value"}]}',
                         'matching_rules' => [
-                            '$.some' => [
+                            '$.some[*]' => [
+                                'matchers' => [
+                                    ['type' => 'collection', 'min' => 1],
+                                ],
+                            ],
+                            '$.some[*].deep' => [
                                 'matchers' => [
                                     ['type' => 'type'],
                                 ],
@@ -99,7 +104,7 @@ final class PactFileGeneratorTest extends TestCase
                [
                    'description' => 'test alpha',
                    'providerStates' => [],
-                   'contents' => '{"some": "value}',
+                   'contents' => '{"some": "value"}',
                    'metaData' => [],
                    'matchingRules' => [
                        'body' => [
@@ -116,11 +121,17 @@ final class PactFileGeneratorTest extends TestCase
                [
                    'description' => 'test beta',
                    'providerStates' => [],
-                   'contents' => '{"some": "value}',
+                   'contents' => '{"some": [{"deep": "value"}]}',
                    'metaData' => [],
                    'matchingRules' => [
                        'body' => [
-                           '$.some' => [
+                           '$.some[*]' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['min' => 1],
+                               ],
+                           ],
+                           '$.some[*].deep' => [
                                'combine' => 'AND',
                                'matchers' => [
                                    ['match' => 'type'],

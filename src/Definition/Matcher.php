@@ -10,6 +10,7 @@ abstract class Matcher
 {
     /** @var array<string, class-string<Matcher>> */
     private const MATCHER_TYPES = [
+        Matcher\Collection::MATCH_TYPE => Matcher\Collection::class,
         Matcher\Decimal::MATCH_TYPE => Matcher\Decimal::class,
         Matcher\Equality::MATCH_TYPE => Matcher\Equality::class,
         Matcher\Include_::MATCH_TYPE => Matcher\Include_::class,

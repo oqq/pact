@@ -72,6 +72,10 @@ final class PactFileGenerator
 
     private function patchMatcher(Matcher $matcher): array
     {
+        if ($matcher instanceof Matcher\Collection) {
+            return ['min' => $matcher->min()];
+        }
+
         if ($matcher instanceof Matcher\Regex) {
             return ['match' => $matcher->type(), 'regex' => $matcher->pattern()];
         }
