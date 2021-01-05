@@ -36,6 +36,7 @@ final class TypeTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Type::fromArray($payloadExample);
     }
 

@@ -40,6 +40,7 @@ final class CollectionTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Collection::fromArray($payloadExample);
     }
 

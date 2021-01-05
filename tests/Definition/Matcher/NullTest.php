@@ -36,6 +36,7 @@ final class NullTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Null_::fromArray($payloadExample);
     }
 

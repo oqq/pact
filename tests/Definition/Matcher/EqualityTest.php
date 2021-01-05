@@ -35,6 +35,7 @@ final class EqualityTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Equality::fromArray($payloadExample);
     }
 

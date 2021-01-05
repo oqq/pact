@@ -36,6 +36,7 @@ final class IntegerTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Integer::fromArray($payloadExample);
     }
 

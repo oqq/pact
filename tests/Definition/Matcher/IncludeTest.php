@@ -41,6 +41,7 @@ final class IncludeTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Include_::fromArray($payloadExample);
     }
 

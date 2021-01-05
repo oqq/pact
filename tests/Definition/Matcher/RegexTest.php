@@ -41,6 +41,7 @@ final class RegexTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Regex::fromArray($payloadExample);
     }
 

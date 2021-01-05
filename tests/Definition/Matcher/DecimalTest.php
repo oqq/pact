@@ -35,6 +35,7 @@ final class DecimalTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Decimal::fromArray($payloadExample);
     }
 
