@@ -22,28 +22,28 @@ abstract class Matcher
 
     public static function create(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::oneOf($payload['type'], \array_keys(self::MATCHER_TYPES));
+        Assert::keyExists($payload, 'match');
+        Assert::oneOf($payload['match'], \array_keys(self::MATCHER_TYPES));
 
-        /** @var array&array{type: key-of<self::MATCHER_TYPES>} $payload */
-        $type = $payload['type'];
+        /** @var array&array{match: key-of<self::MATCHER_TYPES>} $payload */
+        $type = $payload['match'];
         $matcher = self::MATCHER_TYPES[$type];
 
         return $matcher::fromArray($payload);
     }
 
     /**
-     * @param array&array{type: key-of<self::MATCHER_TYPES>} $payload
+     * @param array&array{match: key-of<self::MATCHER_TYPES>} $payload
      */
     abstract public static function fromArray(array $payload): self;
 
     /**
-     * @return array&array{type: key-of<self::MATCHER_TYPES>}
+     * @return array&array{match: key-of<self::MATCHER_TYPES>}
      */
     abstract public function toArray(): array;
 
     /**
      * @return key-of<self::MATCHER_TYPES>
      */
-    abstract public function type(): string;
+    abstract public function match(): string;
 }

@@ -59,8 +59,8 @@ final class PactFileGeneratorTest extends TestCase
                         'matching_rules' => [
                             '$.some' => [
                                 'matchers' => [
-                                    ['type' => 'regex', 'pattern' => '/[a-z]+/'],
-                                    ['type' => 'include', 'value' => 'val'],
+                                    ['match' => 'regex', 'pattern' => '/[a-z]+/'],
+                                    ['match' => 'include', 'value' => 'val'],
                                 ],
                             ],
                         ],
@@ -75,12 +75,12 @@ final class PactFileGeneratorTest extends TestCase
                         'matching_rules' => [
                             '$.some[*]' => [
                                 'matchers' => [
-                                    ['type' => 'collection', 'min' => 1],
+                                    ['match' => 'collection', 'min' => 1],
                                 ],
                             ],
                             '$.some[*].deep' => [
                                 'matchers' => [
-                                    ['type' => 'type'],
+                                    ['match' => 'type'],
                                 ],
                             ],
                         ],

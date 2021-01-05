@@ -14,8 +14,8 @@ final class Collection extends Matcher
 
     public static function fromArray(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::same($payload['type'], self::MATCH_TYPE);
+        Assert::keyExists($payload, 'match');
+        Assert::same($payload['match'], self::MATCH_TYPE);
 
         Assert::keyExists($payload, 'min');
         Assert::integer($payload['min']);
@@ -27,12 +27,12 @@ final class Collection extends Matcher
     public function toArray(): array
     {
         return [
-            'type' => self::MATCH_TYPE,
+            'match' => self::MATCH_TYPE,
             'min' => $this->min,
         ];
     }
 
-    public function type(): string
+    public function match(): string
     {
         return self::MATCH_TYPE;
     }

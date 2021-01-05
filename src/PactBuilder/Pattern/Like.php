@@ -31,7 +31,7 @@ final class Like implements Pattern
     public function matcher(): Matcher
     {
         return Matcher\Type::fromArray([
-            'type' => Matcher\Type::MATCH_TYPE,
+            'match' => Matcher\Type::MATCH_TYPE,
         ]);
     }
 

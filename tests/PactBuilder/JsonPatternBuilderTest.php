@@ -75,7 +75,7 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             '$.some' => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());
@@ -97,7 +97,7 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             '$.some' => [
                 'matchers' => [
-                    ['type' => 'regex', 'pattern' => '.*'],
+                    ['match' => 'regex', 'pattern' => '.*'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());
@@ -121,12 +121,12 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             '$.each_like' => [
                 'matchers' => [
-                    ['type' => 'collection', 'min' => 1],
+                    ['match' => 'collection', 'min' => 1],
                 ],
             ],
             '$.each_like[*]' => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());
@@ -152,12 +152,12 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             '$.each_like' => [
                 'matchers' => [
-                    ['type' => 'collection', 'min' => 1],
+                    ['match' => 'collection', 'min' => 1],
                 ],
             ],
             '$.each_like.*.value' => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());
@@ -205,42 +205,42 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             "$.array[0]" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             '$.array[1]' => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$['.']['[']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$['.'][']']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$.object['(']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$.object[')']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$['\"']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
             "$['\'']" => [
                 'matchers' => [
-                    ['type' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());

@@ -77,13 +77,13 @@ final class PactFileGenerator
         }
 
         if ($matcher instanceof Matcher\Regex) {
-            return ['match' => $matcher->type(), 'regex' => $matcher->pattern()];
+            return ['match' => $matcher->match(), 'regex' => $matcher->pattern()];
         }
 
         if ($matcher instanceof Matcher\Include_) {
-            return ['match' => $matcher->type(), 'include' => $matcher->value()];
+            return ['match' => $matcher->match(), 'include' => $matcher->value()];
         }
 
-        return ['match' => $matcher->type()];
+        return ['match' => $matcher->match()];
     }
 }

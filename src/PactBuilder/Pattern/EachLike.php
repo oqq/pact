@@ -35,7 +35,7 @@ final class EachLike implements Pattern
     public function matcher(): Matcher
     {
         return Matcher\Collection::fromArray([
-            'type' => Matcher\Collection::MATCH_TYPE,
+            'match' => Matcher\Collection::MATCH_TYPE,
             'min' => $this->min,
         ]);
     }

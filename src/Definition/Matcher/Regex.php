@@ -15,8 +15,8 @@ final class Regex extends Matcher
 
     public static function fromArray(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::same($payload['type'], self::MATCH_TYPE);
+        Assert::keyExists($payload, 'match');
+        Assert::same($payload['match'], self::MATCH_TYPE);
 
         Assert::keyExists($payload, 'pattern');
         Assert::string($payload['pattern']);
@@ -27,12 +27,12 @@ final class Regex extends Matcher
     public function toArray(): array
     {
         return [
-            'type' => self::MATCH_TYPE,
+            'match' => self::MATCH_TYPE,
             'pattern' => $this->pattern,
         ];
     }
 
-    public function type(): string
+    public function match(): string
     {
         return self::MATCH_TYPE;
     }

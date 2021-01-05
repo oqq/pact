@@ -17,15 +17,15 @@ final class TypeTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Type::fromArray([
-            'type' =>  'type',
+            'match' =>  'type',
         ]);
 
-        Assert::assertSame('type', $matcher->type());
+        Assert::assertSame('type', $matcher->match());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('type', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('type', $payload['match']);
     }
 
 
@@ -45,14 +45,14 @@ final class TypeTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "type". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
     }

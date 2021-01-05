@@ -39,8 +39,8 @@ final class MatchingRuleTest extends TestCase
             [
                 'combine' => 'AND',
                 'matchers' => [
-                    ['type' => 'type'],
-                    ['type' => 'decimal'],
+                    ['match' => 'type'],
+                    ['match' => 'decimal'],
                 ],
             ],
         ];

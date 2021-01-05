@@ -17,15 +17,15 @@ final class IntegerTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Integer::fromArray([
-            'type' =>  'integer',
+            'match' =>  'integer',
         ]);
 
-        Assert::assertSame('integer', $matcher->type());
+        Assert::assertSame('integer', $matcher->match());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('integer', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('integer', $payload['match']);
     }
 
 
@@ -45,14 +45,14 @@ final class IntegerTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "integer". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
     }

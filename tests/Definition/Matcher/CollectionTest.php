@@ -17,17 +17,17 @@ final class CollectionTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Collection::fromArray([
-            'type' =>  'collection',
+            'match' =>  'collection',
             'min' => 1,
         ]);
 
-        Assert::assertSame('collection', $matcher->type());
+        Assert::assertSame('collection', $matcher->match());
         Assert::assertSame(1, $matcher->min());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('collection', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('collection', $payload['match']);
         Assert::assertArrayHasKey('min', $payload);
         Assert::assertSame(1, $payload['min']);
     }
@@ -49,7 +49,7 @@ final class CollectionTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [
                 'min' => 1,
             ],
@@ -58,7 +58,7 @@ final class CollectionTest extends TestCase
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "collection". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
                 'min' => 1,
             ],
         ];
@@ -66,14 +66,14 @@ final class CollectionTest extends TestCase
         yield 'missing min' => [
             new InvalidArgumentException('Expected the key "min" to exist.'),
             [
-                'type' => 'collection',
+                'match' => 'collection',
             ],
         ];
 
         yield 'invalid min' => [
             new InvalidArgumentException('Expected an integer. Got: string'),
             [
-                'type' => 'collection',
+                'match' => 'collection',
                 'min' => '0',
             ],
         ];
@@ -81,7 +81,7 @@ final class CollectionTest extends TestCase
         yield 'out of bounds min' => [
             new InvalidArgumentException('Expected a value greater than or equal to 1. Got: 0'),
             [
-                'type' => 'collection',
+                'match' => 'collection',
                 'min' => 0,
             ],
         ];

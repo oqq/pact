@@ -17,14 +17,14 @@ final class MatcherCollectorTest extends TestCase
     public function testItCollectsMatchers(): void
     {
         $collector = new MatcherCollector();
-        $collector->addMatcher('$.foo.bar', Matcher::create(['type' => 'type']));
-        $collector->addMatcher('$.foo.bar', Matcher::create(['type' => 'type']));
+        $collector->addMatcher('$.foo.bar', Matcher::create(['match' => 'type']));
+        $collector->addMatcher('$.foo.bar', Matcher::create(['match' => 'type']));
 
         Assert::assertSame([
             '$.foo.bar' => [
                 'matchers' => [
-                    ['type' => 'type'],
-                    ['type' => 'type'],
+                    ['match' => 'type'],
+                    ['match' => 'type'],
                 ],
             ],
         ], $collector->generateMatchingRules());

@@ -28,7 +28,7 @@ final class Term implements Pattern
     public function matcher(): Matcher
     {
         return Matcher\Regex::fromArray([
-            'type' => Matcher\Regex::MATCH_TYPE,
+            'match' => Matcher\Regex::MATCH_TYPE,
             'pattern' => $this->pattern,
         ]);
     }
