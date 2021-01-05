@@ -17,13 +17,13 @@ final class TermTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
     {
-        $pattern = Term::generateWithPattern('value', '/.*/');
+        $pattern = Term::generateWithPattern('value', '.*');
 
         Assert::assertSame('value', $pattern->generate());
 
         $matcher = $pattern->matcher();
         Assert::assertInstanceOf(Regex::class, $matcher);
-        Assert::assertSame('/.*/', $matcher->pattern());
+        Assert::assertSame('.*', $matcher->pattern());
     }
 
     public function testItThrowsWithInvalidPattern(): void
@@ -31,6 +31,6 @@ final class TermTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value "value" does not match the expected pattern');
 
-        Term::generateWithPattern('value', '/[0-9]/');
+        Term::generateWithPattern('value', '[0-9]');
     }
 }

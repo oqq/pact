@@ -25,7 +25,7 @@ abstract class Matcher
         Assert::keyExists($payload, 'type');
         Assert::oneOf($payload['type'], \array_keys(self::MATCHER_TYPES));
 
-        /** @var key-of<self::MATCHER_TYPES> $type */
+        /** @var array&array{type: key-of<self::MATCHER_TYPES>} $payload */
         $type = $payload['type'];
         $matcher = self::MATCHER_TYPES[$type];
 

@@ -85,7 +85,7 @@ final class JsonPatternBuilderTest extends TestCase
     {
         $builder = new JsonPatternBuilder();
         $builder = $builder->withPattern([
-            'some' => $builder->term('value', '/.*/'),
+            'some' => $builder->term('value', '.*'),
         ]);
 
         $body = $builder->build();
@@ -97,7 +97,7 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertSame(MatchingRules::fromArray([
             '$.some' => [
                 'matchers' => [
-                    ['type' => 'regex', 'pattern' => '/.*/'],
+                    ['type' => 'regex', 'pattern' => '.*'],
                 ],
             ],
         ])->toArray(), $body->matchingRules()->toArray());

@@ -18,11 +18,11 @@ final class RegexTest extends TestCase
     {
         $matcher = Regex::fromArray([
             'type' =>  'regex',
-            'pattern' => '/.+/',
+            'pattern' => '.+',
         ]);
 
         Assert::assertSame('regex', $matcher->type());
-        Assert::assertSame('/.+/', $matcher->pattern());
+        Assert::assertSame('.+', $matcher->pattern());
 
         $payload = $matcher->toArray();
 
@@ -30,7 +30,7 @@ final class RegexTest extends TestCase
         Assert::assertSame('regex', $payload['type']);
 
         Assert::assertArrayHasKey('pattern', $payload);
-        Assert::assertSame('/.+/', $payload['pattern']);
+        Assert::assertSame('.+', $payload['pattern']);
     }
 
 

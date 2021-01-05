@@ -15,7 +15,7 @@ final class Term implements Pattern
 
     public static function generateWithPattern(string $generate, string $pattern): self
     {
-        Assert::regex($generate, $pattern);
+        Assert::regex($generate, '(' . $pattern . ')');
 
         return new self($generate, $pattern);
     }
