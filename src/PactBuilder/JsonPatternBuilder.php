@@ -114,7 +114,7 @@ final class JsonPatternBuilder
         }
 
         if (false !== \strpbrk($key, '.[]()"\'')) {
-            return \sprintf("%s['%s']", $path, \str_replace('\'', '\\\'', $key));
+            return \sprintf("%s['%s']", $path, $key);
         }
 
         return \sprintf('%s.%s', $path, $key);

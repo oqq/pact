@@ -35,7 +35,7 @@ final class JsonPatternBuilderTest extends TestCase
     {
         $builder = new JsonPatternBuilder();
 
-        Assert::assertNotSame($builder, $builder->withPattern([]));
+        Assert::assertNotSame($builder->withPattern([]), $builder->withPattern([]));
     }
 
     public function testItGeneratesWithSimplePattern(): void
@@ -238,7 +238,7 @@ final class JsonPatternBuilderTest extends TestCase
                     ['match' => 'type'],
                 ],
             ],
-            "$['\'']" => [
+            "$[''']" => [
                 'matchers' => [
                     ['match' => 'type'],
                 ],
