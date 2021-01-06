@@ -13,8 +13,8 @@ final class Null_ extends Matcher
 
     public static function fromArray(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::same($payload['type'], self::MATCH_TYPE);
+        Assert::keyExists($payload, 'match');
+        Assert::same($payload['match'], self::MATCH_TYPE);
 
         return new self();
     }
@@ -22,8 +22,13 @@ final class Null_ extends Matcher
     public function toArray(): array
     {
         return [
-            'type' => self::MATCH_TYPE,
+            'match' => self::MATCH_TYPE,
         ];
+    }
+
+    public function match(): string
+    {
+        return self::MATCH_TYPE;
     }
 
     private function __construct()

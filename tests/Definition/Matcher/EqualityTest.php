@@ -17,13 +17,15 @@ final class EqualityTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Equality::fromArray([
-            'type' =>  'equality',
+            'match' =>  'equality',
         ]);
+
+        Assert::assertSame('equality', $matcher->match());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('equality', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('equality', $payload['match']);
     }
 
     /**
@@ -33,6 +35,7 @@ final class EqualityTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Equality::fromArray($payloadExample);
     }
 
@@ -42,14 +45,14 @@ final class EqualityTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "equality". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
     }

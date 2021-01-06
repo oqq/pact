@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Pact\PactBuilder;
+namespace Oqq\Pact\PactBuilder\Pattern;
 
+use Oqq\Pact\Definition\Matcher;
+use Oqq\Pact\PactBuilder\Pattern;
 use Oqq\Pact\Util\Assert;
 
-final class Term
+final class Term implements Pattern
 {
     private string $generate;
     private string $pattern;
 
     public static function generateWithPattern(string $generate, string $pattern): self
     {
-        Assert::regex($generate, $pattern);
+        Assert::regex($generate, '(' . $pattern . ')');
 
         return new self($generate, $pattern);
     }
@@ -23,9 +25,12 @@ final class Term
         return $this->generate;
     }
 
-    public function pattern(): string
+    public function matcher(): Matcher
     {
-        return $this->pattern;
+        return Matcher\Regex::fromArray([
+            'match' => Matcher\Regex::MATCH_TYPE,
+            'pattern' => $this->pattern,
+        ]);
     }
 
     private function __construct(string $generate, string $pattern)

@@ -7,28 +7,28 @@ namespace Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\Util\Assert;
 
-final class Regex extends Matcher
+final class Collection extends Matcher
 {
-    public const MATCH_TYPE = 'regex';
-
-    private string $pattern;
+    public const MATCH_TYPE = 'collection';
+    private int $min;
 
     public static function fromArray(array $payload): self
     {
         Assert::keyExists($payload, 'match');
         Assert::same($payload['match'], self::MATCH_TYPE);
 
-        Assert::keyExists($payload, 'pattern');
-        Assert::string($payload['pattern']);
+        Assert::keyExists($payload, 'min');
+        Assert::integer($payload['min']);
+        Assert::greaterThanEq($payload['min'], 1);
 
-        return new self($payload['pattern']);
+        return new self($payload['min']);
     }
 
     public function toArray(): array
     {
         return [
             'match' => self::MATCH_TYPE,
-            'pattern' => $this->pattern,
+            'min' => $this->min,
         ];
     }
 
@@ -37,13 +37,13 @@ final class Regex extends Matcher
         return self::MATCH_TYPE;
     }
 
-    public function pattern(): string
+    public function min(): int
     {
-        return $this->pattern;
+        return $this->min;
     }
 
-    private function __construct(string $pattern)
+    private function __construct(int $min)
     {
-        $this->pattern = $pattern;
+        $this->min = $min;
     }
 }

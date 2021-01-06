@@ -6,7 +6,10 @@ namespace Oqq\Pact\Definition;
 
 use Oqq\Pact\Util\Assert;
 
-final class MatchingRules
+/**
+ * @implements \IteratorAggregate<string, MatchingRule>
+ */
+final class MatchingRules implements \IteratorAggregate
 {
     /** @var array<string, MatchingRule> */
     private array $matchingRules;
@@ -30,6 +33,11 @@ final class MatchingRules
             static fn (MatchingRule $matchingRule): array => $matchingRule->toArray(),
             $this->matchingRules
         );
+    }
+
+    public function getIterator(): \Traversable
+    {
+        yield from $this->matchingRules;
     }
 
     /**

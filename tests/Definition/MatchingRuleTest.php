@@ -39,8 +39,8 @@ final class MatchingRuleTest extends TestCase
             [
                 'combine' => 'AND',
                 'matchers' => [
-                    ['type' => 'type'],
-                    ['type' => 'decimal'],
+                    ['match' => 'type'],
+                    ['match' => 'decimal'],
                 ],
             ],
         ];
@@ -50,6 +50,14 @@ final class MatchingRuleTest extends TestCase
                 'matchers' => [],
             ],
         ];
+    }
+
+    public function testItUsesDefaultCombineMethod(): void
+    {
+        $rule = MatchingRule::fromArray(['matchers' => []]);
+
+        Assert::assertSame('AND', $rule->combine());
+        Assert::assertSame([], $rule->matchers());
     }
 
     /**

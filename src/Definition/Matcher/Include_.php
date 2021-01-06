@@ -15,8 +15,8 @@ final class Include_ extends Matcher
 
     public static function fromArray(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::same($payload['type'], self::MATCH_TYPE);
+        Assert::keyExists($payload, 'match');
+        Assert::same($payload['match'], self::MATCH_TYPE);
 
         Assert::keyExists($payload, 'value');
         Assert::string($payload['value']);
@@ -27,9 +27,19 @@ final class Include_ extends Matcher
     public function toArray(): array
     {
         return [
-            'type' => self::MATCH_TYPE,
+            'match' => self::MATCH_TYPE,
             'value' => $this->value,
         ];
+    }
+
+    public function match(): string
+    {
+        return self::MATCH_TYPE;
+    }
+
+    public function value(): string
+    {
+        return $this->value;
     }
 
     private function __construct(string $value)

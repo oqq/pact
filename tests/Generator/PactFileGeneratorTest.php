@@ -55,8 +55,15 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test alpha',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": "value}',
-                        'matching_rules' => [],
+                        'content' => '{"some": "value"}',
+                        'matching_rules' => [
+                            '$.some' => [
+                                'matchers' => [
+                                    ['match' => 'regex', 'pattern' => '/[a-z]+/'],
+                                    ['match' => 'include', 'value' => 'val'],
+                                ],
+                            ],
+                        ],
                     ],
                     'metadata' => [],
                 ],
@@ -64,8 +71,19 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test beta',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": "value}',
-                        'matching_rules' => [],
+                        'content' => '{"some": [{"deep": "value"}]}',
+                        'matching_rules' => [
+                            '$.some[*]' => [
+                                'matchers' => [
+                                    ['match' => 'collection', 'min' => 1],
+                                ],
+                            ],
+                            '$.some[*].deep' => [
+                                'matchers' => [
+                                    ['match' => 'type'],
+                                ],
+                            ],
+                        ],
                     ],
                     'metadata' => [],
                 ],
@@ -86,19 +104,40 @@ final class PactFileGeneratorTest extends TestCase
                [
                    'description' => 'test alpha',
                    'providerStates' => [],
-                   'contents' => '{"some": "value}',
+                   'contents' => '{"some": "value"}',
                    'metaData' => [],
                    'matchingRules' => [
-                       'body' => [],
+                       'body' => [
+                           '$.some' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['match' => 'regex', 'regex' => '/[a-z]+/'],
+                                   ['match' => 'include', 'include' => 'val'],
+                               ],
+                           ],
+                       ],
                    ],
                ],
                [
                    'description' => 'test beta',
                    'providerStates' => [],
-                   'contents' => '{"some": "value}',
+                   'contents' => '{"some": [{"deep": "value"}]}',
                    'metaData' => [],
                    'matchingRules' => [
-                       'body' => [],
+                       'body' => [
+                           '$.some[*]' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['min' => 1],
+                               ],
+                           ],
+                           '$.some[*].deep' => [
+                               'combine' => 'AND',
+                               'matchers' => [
+                                   ['match' => 'type'],
+                               ],
+                           ],
+                       ],
                    ],
                ],
            ],

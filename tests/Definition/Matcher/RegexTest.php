@@ -17,17 +17,20 @@ final class RegexTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Regex::fromArray([
-            'type' =>  'regex',
-            'pattern' => '/.+/',
+            'match' =>  'regex',
+            'pattern' => '.+',
         ]);
+
+        Assert::assertSame('regex', $matcher->match());
+        Assert::assertSame('.+', $matcher->pattern());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('regex', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('regex', $payload['match']);
 
         Assert::assertArrayHasKey('pattern', $payload);
-        Assert::assertSame('/.+/', $payload['pattern']);
+        Assert::assertSame('.+', $payload['pattern']);
     }
 
 
@@ -38,6 +41,7 @@ final class RegexTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Regex::fromArray($payloadExample);
     }
 
@@ -47,28 +51,28 @@ final class RegexTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "regex". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
 
         yield 'missing pattern' => [
             new InvalidArgumentException('Expected the key "pattern" to exist.'),
             [
-                'type' => 'regex',
+                'match' => 'regex',
             ],
         ];
 
         yield 'invalid pattern' => [
             new InvalidArgumentException('Expected a string. Got: integer'),
             [
-                'type' => 'regex',
+                'match' => 'regex',
                 'pattern' => 5,
             ],
         ];

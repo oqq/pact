@@ -17,13 +17,15 @@ final class NullTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Null_::fromArray([
-            'type' =>  'null',
+            'match' =>  'null',
         ]);
+
+        Assert::assertSame('null', $matcher->match());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('null', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('null', $payload['match']);
     }
 
 
@@ -34,6 +36,7 @@ final class NullTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Null_::fromArray($payloadExample);
     }
 
@@ -43,14 +46,14 @@ final class NullTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "null". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
     }

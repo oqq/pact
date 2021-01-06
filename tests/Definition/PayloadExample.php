@@ -12,7 +12,7 @@ final class PayloadExample
     {
         return [
             'matchers' => [
-                ['type' => 'type'],
+                ['match' => 'type'],
             ],
         ];
     }
@@ -33,7 +33,7 @@ final class PayloadExample
             'value' => '/',
             'matching_rule' => [
                 'matchers' => [
-                    ['type' => 'include', 'value' => '/'],
+                    ['match' => 'include', 'value' => '/'],
                 ],
             ],
         ];
@@ -52,7 +52,7 @@ final class PayloadExample
             'values' => ['x', 'y'],
             'matching_rule' => [
                 'matchers' => [
-                    ['type' => 'equality'],
+                    ['match' => 'equality'],
                 ],
             ],
         ];
@@ -65,7 +65,7 @@ final class PayloadExample
                 'value' => 'application/json;charset=UTF-8',
                 'matching_rule' => [
                     'matchers' => [
-                        ['type' => 'include', 'value' => 'application/json'],
+                        ['match' => 'include', 'value' => 'application/json'],
                     ],
                 ],
             ],
@@ -79,7 +79,7 @@ final class PayloadExample
             'matching_rules' => [
                 '$.some_json_value' => [
                     'matchers' => [
-                        ['type' => 'type'],
+                        ['match' => 'type'],
                     ],
                 ],
             ],

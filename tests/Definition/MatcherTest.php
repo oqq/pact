@@ -17,7 +17,7 @@ final class MatcherTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Matcher::create([
-            'type' => 'type',
+            'match' => 'type',
         ]);
 
         Assert::assertInstanceOf(Matcher\Type::class, $matcher);
@@ -26,7 +26,7 @@ final class MatcherTest extends TestCase
     public function testItWillThrowWithMissingTypeValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected the key "type" to exist');
+        $this->expectExceptionMessage('Expected the key "match" to exist');
 
         Matcher::create([
         ]);
@@ -38,7 +38,7 @@ final class MatcherTest extends TestCase
         $this->expectExceptionMessageMatches('/Expected one of: [^\.]+\. Got: "invalid"/');
 
         Matcher::create([
-            'type' => 'invalid',
+            'match' => 'invalid',
         ]);
     }
 }

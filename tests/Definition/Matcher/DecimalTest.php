@@ -17,13 +17,15 @@ final class DecimalTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Decimal::fromArray([
-            'type' =>  'decimal',
+            'match' =>  'decimal',
         ]);
+
+        Assert::assertSame('decimal', $matcher->match());
 
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('decimal', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('decimal', $payload['match']);
     }
 
     /**
@@ -33,6 +35,7 @@ final class DecimalTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Decimal::fromArray($payloadExample);
     }
 
@@ -42,14 +45,14 @@ final class DecimalTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [],
         ];
 
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "decimal". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
             ],
         ];
     }

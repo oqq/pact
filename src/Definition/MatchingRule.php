@@ -59,6 +59,19 @@ final class MatchingRule
         ];
     }
 
+    public function combine(): string
+    {
+        return $this->combine;
+    }
+
+    /**
+     * @return list<Matcher>
+     */
+    public function matchers(): array
+    {
+        return $this->matchers;
+    }
+
     /**
      * @param self::COMBINE_TYPE_* $combine
      */

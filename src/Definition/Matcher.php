@@ -10,6 +10,7 @@ abstract class Matcher
 {
     /** @var array<string, class-string<Matcher>> */
     private const MATCHER_TYPES = [
+        Matcher\Collection::MATCH_TYPE => Matcher\Collection::class,
         Matcher\Decimal::MATCH_TYPE => Matcher\Decimal::class,
         Matcher\Equality::MATCH_TYPE => Matcher\Equality::class,
         Matcher\Include_::MATCH_TYPE => Matcher\Include_::class,
@@ -21,17 +22,28 @@ abstract class Matcher
 
     public static function create(array $payload): self
     {
-        Assert::keyExists($payload, 'type');
-        Assert::oneOf($payload['type'], \array_keys(self::MATCHER_TYPES));
+        Assert::keyExists($payload, 'match');
+        Assert::oneOf($payload['match'], \array_keys(self::MATCHER_TYPES));
 
-        /** @var key-of<self::MATCHER_TYPES> $type */
-        $type = $payload['type'];
+        /** @var array&array{match: key-of<self::MATCHER_TYPES>} $payload */
+        $type = $payload['match'];
         $matcher = self::MATCHER_TYPES[$type];
 
         return $matcher::fromArray($payload);
     }
 
+    /**
+     * @param array&array{match: key-of<self::MATCHER_TYPES>} $payload
+     */
     abstract public static function fromArray(array $payload): self;
 
+    /**
+     * @return array&array{match: key-of<self::MATCHER_TYPES>}
+     */
     abstract public function toArray(): array;
+
+    /**
+     * @return key-of<self::MATCHER_TYPES>
+     */
+    abstract public function match(): string;
 }

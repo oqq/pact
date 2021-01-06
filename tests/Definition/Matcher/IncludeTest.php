@@ -17,14 +17,17 @@ final class IncludeTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $matcher = Include_::fromArray([
-            'type' =>  'include',
+            'match' =>  'include',
             'value' => 'something',
         ]);
 
+        Assert::assertSame('include', $matcher->match());
+        Assert::assertSame('something', $matcher->value());
+
         $payload = $matcher->toArray();
 
-        Assert::assertArrayHasKey('type', $payload);
-        Assert::assertSame('include', $payload['type']);
+        Assert::assertArrayHasKey('match', $payload);
+        Assert::assertSame('include', $payload['match']);
 
         Assert::assertArrayHasKey('value', $payload);
         Assert::assertSame('something', $payload['value']);
@@ -38,6 +41,7 @@ final class IncludeTest extends TestCase
     {
         $this->expectExceptionObject($expectedException);
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         Include_::fromArray($payloadExample);
     }
 
@@ -47,7 +51,7 @@ final class IncludeTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
-            new InvalidArgumentException('Expected the key "type" to exist.'),
+            new InvalidArgumentException('Expected the key "match" to exist.'),
             [
                 'include' => 'something',
             ],
@@ -56,7 +60,7 @@ final class IncludeTest extends TestCase
         yield 'invalid type' => [
             new InvalidArgumentException('Expected a value identical to "include". Got: "invalid"'),
             [
-                'type' => 'invalid',
+                'match' => 'invalid',
                 'include' => 'something',
             ],
         ];
@@ -64,14 +68,14 @@ final class IncludeTest extends TestCase
         yield 'missing value' => [
             new InvalidArgumentException('Expected the key "value" to exist.'),
             [
-                'type' => 'include',
+                'match' => 'include',
             ],
         ];
 
         yield 'invalid value' => [
             new InvalidArgumentException('Expected a string. Got: integer'),
             [
-                'type' => 'include',
+                'match' => 'include',
                 'value' => 5,
             ],
         ];
