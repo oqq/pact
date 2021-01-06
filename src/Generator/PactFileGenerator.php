@@ -55,11 +55,11 @@ final class PactFileGenerator
     {
         /** @var MatchingRule $matchingRule */
         foreach ($matchingRules as $path => $matchingRule) {
-            yield $path => $this->pathMatchingRule($matchingRule);
+            yield $path => $this->patchMatchingRule($matchingRule);
         }
     }
 
-    private function pathMatchingRule(MatchingRule $matchingRule): array
+    private function patchMatchingRule(MatchingRule $matchingRule): array
     {
         return [
             'combine' => $matchingRule->combine(),
