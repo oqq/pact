@@ -24,6 +24,7 @@ final class ProviderTest extends TestCase
 
         Assert::assertArrayHasKey('name', $payload);
         Assert::assertSame('test', $payload['name']);
+        Assert::assertSame('test', $provider->name());
     }
 
     /**
