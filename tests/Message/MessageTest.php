@@ -19,7 +19,9 @@ final class MessageTest extends TestCase
     {
         $messageDefinition = MessageDefinition::fromArray(\array_replace(PayloadExample::message(), [
             'body' => [
-                'content' => '{"some": "value"}',
+                'content' => [
+                    'some' => 'value',
+                ],
                 'matching_rules' => [],
             ],
             'metadata' => ['metaAlpha' => 'data'],
@@ -27,7 +29,7 @@ final class MessageTest extends TestCase
 
         $message = Message::fromMessageDefinition($messageDefinition);
 
-        Assert::assertSame('{"some": "value"}', $message->body());
+        Assert::assertSame(['some' => 'value'], $message->body());
         Assert::assertSame(['metaAlpha' => 'data'], $message->headers());
     }
 }

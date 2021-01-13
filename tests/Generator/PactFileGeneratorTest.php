@@ -55,7 +55,9 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test alpha',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": "value"}',
+                        'content' => [
+                            'some' => 'value',
+                        ],
                         'matching_rules' => [
                             '$.some' => [
                                 'matchers' => [
@@ -71,7 +73,11 @@ final class PactFileGeneratorTest extends TestCase
                     'description' => 'test beta',
                     'provider_states' => [],
                     'body' => [
-                        'content' => '{"some": [{"deep": "value"}]}',
+                        'content' => [
+                            'some' => [
+                                'deep' => 'value',
+                            ],
+                        ],
                         'matching_rules' => [
                             '$.some[*]' => [
                                 'matchers' => [
@@ -104,7 +110,9 @@ final class PactFileGeneratorTest extends TestCase
                [
                    'description' => 'test alpha',
                    'providerStates' => [],
-                   'contents' => '{"some": "value"}',
+                   'contents' => [
+                       'some' => 'value',
+                   ],
                    'metaData' => [],
                    'matchingRules' => [
                        'body' => [
@@ -121,7 +129,11 @@ final class PactFileGeneratorTest extends TestCase
                [
                    'description' => 'test beta',
                    'providerStates' => [],
-                   'contents' => '{"some": [{"deep": "value"}]}',
+                   'contents' => [
+                       'some' => [
+                           'deep' => 'value',
+                       ],
+                   ],
                    'metaData' => [],
                    'matchingRules' => [
                        'body' => [

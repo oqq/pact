@@ -17,19 +17,21 @@ final class BodyTest extends TestCase
     public function testItWillCreateFromPerfectPayload(): void
     {
         $body = Body::fromArray([
-            'content' =>  '{"some_json_value": true}',
+            'content' =>  [
+                'some_json_value' => true,
+            ],
             'matching_rules' => [
                 '$.some_json_value' => PayloadExample::matchingRule(),
             ],
         ]);
 
-        Assert::assertSame('{"some_json_value": true}', $body->content());
+        Assert::assertSame(['some_json_value' => true], $body->content());
         Assert::assertNotEmpty($body->matchingRules()->toArray());
 
         $payload = $body->toArray();
 
         Assert::assertArrayHasKey('content', $payload);
-        Assert::assertSame('{"some_json_value": true}', $payload['content']);
+        Assert::assertSame(['some_json_value' => true], $payload['content']);
 
         Assert::assertArrayHasKey('matching_rules', $payload);
         Assert::assertIsArray($payload['matching_rules']);
@@ -52,13 +54,15 @@ final class BodyTest extends TestCase
     public function invalidPayloadProvider(): iterable
     {
         $perfectValues = [
-            'content' =>  '{"some_json_value": true}',
+            'content' =>  [
+                'some_json_value' => true,
+            ],
             'matching_rules' => [
                 '$.some_json_value' => PayloadExample::matchingRule(),
             ],
         ];
 
-        yield from ValueObjectPayloadAssertion::string($perfectValues, 'content');
+        yield from ValueObjectPayloadAssertion::array($perfectValues, 'content');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'matching_rules');
     }
 }

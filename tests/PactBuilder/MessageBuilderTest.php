@@ -38,7 +38,7 @@ final class MessageBuilderTest extends TestCase
             ->expectsToReceive('test description')
         )->build();
 
-        Assert::assertSame('', $message->body()->content());
+        Assert::assertSame([], $message->body()->content());
     }
 
     public function testItIsImmutable(): void

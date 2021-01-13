@@ -20,14 +20,16 @@ final class MessageTest extends TestCase
             'description' => 'test',
             'provider_states' => PayloadExample::providerStates(),
             'body' => [
-                'content' => '{"some": "value"}',
+                'content' => [
+                    'some' => 'value'
+                ],
                 'matching_rules' => [],
             ],
             'metadata' => ['some' => 'value'],
         ]);
 
         Assert::assertSame('test', $message->description()->value());
-        Assert::assertSame('{"some": "value"}', $message->body()->content());
+        Assert::assertSame(['some' => 'value'], $message->body()->content());
         Assert::assertSame(['some' => 'value'], $message->metadata());
 
         $payload = $message->toArray();
@@ -56,7 +58,9 @@ final class MessageTest extends TestCase
             'description' => PayloadExample::description(),
             'provider_states' => PayloadExample::providerStates(),
             'body' => [
-                'content' => '{"some": "value"}',
+                'content' => [
+                    'some' => 'value'
+                ],
                 'matching_rules' => [],
             ],
             'metadata' => ['some' => 'value'],

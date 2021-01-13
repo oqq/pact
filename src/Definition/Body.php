@@ -8,13 +8,13 @@ use Oqq\Pact\Util\Assert;
 
 final class Body
 {
-    private string $content;
+    private array $content;
     private MatchingRules $matchingRules;
 
     public static function fromArray(array $payload): self
     {
         Assert::keyExists($payload, 'content');
-        Assert::string($payload['content']);
+        Assert::isArray($payload['content']);
 
         Assert::keyExists($payload, 'matching_rules');
         Assert::isArray($payload['matching_rules']);
@@ -32,7 +32,7 @@ final class Body
         ];
     }
 
-    public function content(): string
+    public function content(): array
     {
         return $this->content;
     }
@@ -42,7 +42,7 @@ final class Body
         return $this->matchingRules;
     }
 
-    private function __construct(string $content, MatchingRules $matchingRules)
+    private function __construct(array $content, MatchingRules $matchingRules)
     {
         $this->content = $content;
         $this->matchingRules = $matchingRules;

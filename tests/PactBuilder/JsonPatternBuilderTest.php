@@ -23,10 +23,9 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(
-            '{"some":"value"}',
-            $body->content()
-        );
+        Assert::assertSame([
+            'some' => 'value',
+        ], $body->content());
 
         Assert::assertSame([], $body->matchingRules()->toArray());
     }
@@ -49,11 +48,11 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
+        Assert::assertSame([
             'some' => [
                 'deep' => 'value',
             ],
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        ], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
         ])->toArray(), $body->matchingRules()->toArray());
@@ -68,9 +67,9 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
+        Assert::assertSame([
             'some' => 'value',
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        ], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
             '$.some' => [
@@ -90,9 +89,7 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
-            'some' => 'value',
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        Assert::assertSame(['some' => 'value'], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
             '$.some' => [
@@ -114,9 +111,7 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
-            'each_like' => [1],
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        Assert::assertSame(['each_like' => [1]], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
             '$.each_like' => [
@@ -143,11 +138,11 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
+        Assert::assertSame([
             'each_like' => [
                 ['value' => 1],
             ],
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        ], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
             '$.each_like' => [
@@ -185,7 +180,7 @@ final class JsonPatternBuilderTest extends TestCase
 
         $body = $builder->build();
 
-        Assert::assertSame(\json_encode([
+        Assert::assertSame([
             'array' => [
                 1,
                 2
@@ -200,7 +195,7 @@ final class JsonPatternBuilderTest extends TestCase
             ],
             '"' => 1,
             "'" => 1,
-        ], \JSON_THROW_ON_ERROR), $body->content());
+        ], $body->content());
 
         Assert::assertSame(MatchingRules::fromArray([
             "$.array[0]" => [

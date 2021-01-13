@@ -31,12 +31,10 @@ final class JsonPatternBuilder
         $matchers = new MatcherCollector();
         $content = self::extractRecursiveMatchingRules($this->content, '$', $matchers);
 
-        return Body::fromArray(
-            [
-                'content' => \json_encode($content, \JSON_THROW_ON_ERROR),
-                'matching_rules' => $matchers->generateMatchingRules(),
-            ]
-        );
+        return Body::fromArray([
+            'content' => $content,
+            'matching_rules' => $matchers->generateMatchingRules(),
+        ]);
     }
 
     /**

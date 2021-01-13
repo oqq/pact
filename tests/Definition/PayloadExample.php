@@ -75,7 +75,7 @@ final class PayloadExample
     public static function body(): array
     {
         return [
-            'content' => '{"some_json_value": true}',
+            'content' => ['some_json_value' => true],
             'matching_rules' => [
                 '$.some_json_value' => [
                     'matchers' => [
@@ -163,7 +163,9 @@ final class PayloadExample
             'description' => self::description(),
             'provider_states' => self::providerStates(),
             'body' => [
-                'content' => '{"some": "value"}',
+                'content' => [
+                    'some' => 'value'
+                ],
                 'matching_rules' => [],
             ],
             'metadata' => ['some' => 'value'],
