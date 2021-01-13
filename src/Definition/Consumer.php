@@ -25,6 +25,11 @@ final class Consumer
         ];
     }
 
+    public function name(): string
+    {
+        return $this->name;
+    }
+
     private function __construct(string $name)
     {
         $this->name = $name;

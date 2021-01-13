@@ -51,7 +51,7 @@ final class MessageBuilder
     public function build(): Message
     {
         $body = $this->bodyBuilder === null
-            ? ['content' => '', 'matching_rules' => []]
+            ? ['content' => [], 'matching_rules' => []]
             : $this->bodyBuilder->build()->toArray();
 
         return Message::fromArray([

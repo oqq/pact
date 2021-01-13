@@ -8,18 +8,15 @@ use Oqq\Pact\Definition\Message as MessageDefinition;
 
 final class Message
 {
-    private string $body;
+    private array $body;
     private array $headers;
 
     public static function fromMessageDefinition(MessageDefinition $messageDefinition): self
     {
-        return new self(
-            $messageDefinition->body()->content(),
-            $messageDefinition->metadata()
-        );
+        return new self($messageDefinition->body()->content(), $messageDefinition->metadata());
     }
 
-    public function body(): string
+    public function body(): array
     {
         return $this->body;
     }
@@ -29,7 +26,7 @@ final class Message
         return $this->headers;
     }
 
-    private function __construct(string $body, array $headers)
+    private function __construct(array $body, array $headers)
     {
         $this->body = $body;
         $this->headers = $headers;
