@@ -7,7 +7,6 @@
     ignoreInternalFunctionFalseReturn="false"
     ignoreInternalFunctionNullReturn="false"
     findUnusedPsalmSuppress="true"
-    allowPhpStormGenerics="true"
 >
     <projectFiles>
         <directory name="src"/>
