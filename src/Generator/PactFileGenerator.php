@@ -43,9 +43,10 @@ final class PactFileGenerator
                 'description' => $message->description()->value(),
                 'providerStates' => [],
                 'contents' => $message->body()->content(),
-                'metaData' => $message->metadata(),
+                'metaData' => $message->metadata()->content(),
                 'matchingRules' => [
                     'body' => \iterator_to_array($this->patchMatchingRules($message->body()->matchingRules())),
+                    'metaData' => \iterator_to_array($this->patchMatchingRules($message->metadata()->matchingRules())),
                 ],
             ];
         }

@@ -168,7 +168,12 @@ final class PayloadExample
                 ],
                 'matching_rules' => [],
             ],
-            'metadata' => ['some' => 'value'],
+            'metadata' => [
+                'content' => [
+                    'some' => 'value'
+                ],
+                'matching_rules' => [],
+            ],
         ];
     }
 

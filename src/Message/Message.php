@@ -13,7 +13,7 @@ final class Message
 
     public static function fromMessageDefinition(MessageDefinition $messageDefinition): self
     {
-        return new self($messageDefinition->body()->content(), $messageDefinition->metadata());
+        return new self($messageDefinition->body()->content(), $messageDefinition->metadata()->content());
     }
 
     public function body(): array

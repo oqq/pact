@@ -24,7 +24,12 @@ final class MessageTest extends TestCase
                 ],
                 'matching_rules' => [],
             ],
-            'metadata' => ['metaAlpha' => 'data'],
+            'metadata' => [
+                'content' => [
+                    'metaAlpha' => 'data',
+                ],
+                'matching_rules' => [],
+            ],
         ]));
 
         $message = Message::fromMessageDefinition($messageDefinition);

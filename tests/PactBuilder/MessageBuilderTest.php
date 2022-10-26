@@ -29,7 +29,28 @@ final class MessageBuilderTest extends TestCase
         Assert::assertSame([
             'some' => 'value',
             'Content-Type' => 'application/json',
-        ], $message->metadata());
+        ], $message->metadata()->content());
+    }
+
+    public function testItBuildsMetadataFromCallable(): void
+    {
+        $message = ((new MessageBuilder())
+            ->expectsToReceive('test description')
+            ->given('something', ['important' => 'happen'])
+            ->withMetadata(static fn (JsonPatternBuilder $metadata): JsonPatternBuilder => $metadata
+                ->withPattern(['some' => 'value'])
+            )
+            ->withJsonBody(static fn (JsonPatternBuilder $body): JsonPatternBuilder => $body
+                ->withPattern(['some' => 'value'])
+            )
+        )->build();
+
+        Assert::assertSame('test description', $message->description()->value());
+        Assert::assertSame([
+            'some' => 'value',
+            'Content-Type' => 'application/json',
+        ], $message->metadata()->content());
+
     }
 
     public function testItBuildsMessageWithEmptyBody(): void

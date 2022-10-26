@@ -37,6 +37,35 @@ final class JsonPatternBuilderTest extends TestCase
         Assert::assertNotSame($builder->withPattern([]), $builder->withPattern([]));
     }
 
+    public function testItMergesPattern(): void
+    {
+        $builder = (new JsonPatternBuilder())->withPattern([
+            'some' => [
+                'deep' => 'value',
+                'untouched' => 'value',
+            ],
+        ]);
+
+        $builder = $builder->withPattern([
+            'some' => [
+                'deep' => 'new value',
+                'extra' => 'value',
+            ],
+            'extra' => 'value',
+        ]);
+
+        $body = $builder->build();
+
+        Assert::assertSame([
+            'some' => [
+                'deep' => 'new value',
+                'untouched' => 'value',
+                'extra' => 'value',
+            ],
+            'extra' => 'value',
+        ], $body->content());
+    }
+
     public function testItGeneratesWithSimplePattern(): void
     {
         $builder = new JsonPatternBuilder();

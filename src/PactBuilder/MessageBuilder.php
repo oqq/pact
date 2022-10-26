@@ -10,8 +10,14 @@ final class MessageBuilder
 {
     private string $description = '';
     private array $providerStates = [];
-    private array $metadata = [];
-    private ?JsonPatternBuilder $bodyBuilder = null;
+    private JsonPatternBuilder $metadataBuilder;
+    private JsonPatternBuilder $bodyBuilder;
+
+    public function __construct()
+    {
+        $this->metadataBuilder = new JsonPatternBuilder();
+        $this->bodyBuilder = new JsonPatternBuilder();
+    }
 
     public function expectsToReceive(string $description): self
     {
@@ -29,10 +35,21 @@ final class MessageBuilder
         return $clone;
     }
 
-    public function withMetadata(array $metadata): self
+    /**
+     * @psalm-type Builder = callable(JsonPatternBuilder):JsonPatternBuilder
+     *
+     * @param Builder|array $callable
+     */
+    public function withMetadata(callable|array $callable): self
     {
         $clone = clone $this;
-        $clone->metadata = \array_merge($clone->metadata, $metadata);
+
+        if (is_array($callable)) {
+            $clone->metadataBuilder = $this->metadataBuilder->withPattern($callable);
+            return $clone;
+        }
+
+        $clone->metadataBuilder = $callable($this->metadataBuilder);
 
         return $clone;
     }
@@ -43,22 +60,18 @@ final class MessageBuilder
     public function withJsonBody(callable $callable): self
     {
         $clone = $this->withMetadata(['Content-Type' => 'application/json']);
-        $clone->bodyBuilder = $callable(new JsonPatternBuilder());
+        $clone->bodyBuilder = $callable($this->bodyBuilder);
 
         return $clone;
     }
 
     public function build(): Message
     {
-        $body = $this->bodyBuilder === null
-            ? ['content' => [], 'matching_rules' => []]
-            : $this->bodyBuilder->build()->toArray();
-
         return Message::fromArray([
             'description' => $this->description,
             'provider_states' => $this->providerStates,
-            'body' => $body,
-            'metadata' => $this->metadata,
+            'body' => $this->bodyBuilder->build()->toArray(),
+            'metadata' => $this->metadataBuilder->build()->toArray(),
         ]);
     }
 }

@@ -25,12 +25,17 @@ final class MessageTest extends TestCase
                 ],
                 'matching_rules' => [],
             ],
-            'metadata' => ['some' => 'value'],
+            'metadata' => [
+                'content' => [
+                    'some' => 'value'
+                ],
+                'matching_rules' => [],
+            ],
         ]);
 
         Assert::assertSame('test', $message->description()->value());
         Assert::assertSame(['some' => 'value'], $message->body()->content());
-        Assert::assertSame(['some' => 'value'], $message->metadata());
+        Assert::assertSame(['some' => 'value'], $message->metadata()->content());
 
         $payload = $message->toArray();
         Assert::assertArrayHasKey('description', $payload);
@@ -63,12 +68,17 @@ final class MessageTest extends TestCase
                 ],
                 'matching_rules' => [],
             ],
-            'metadata' => ['some' => 'value'],
+            'metadata' => [
+                'content' => [
+                    'some' => 'value'
+                ],
+                'matching_rules' => [],
+            ],
         ];
 
         yield from ValueObjectPayloadAssertion::string($perfectValues, 'description');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'provider_states');
         yield from ValueObjectPayloadAssertion::array($perfectValues, 'body');
-        yield from ValueObjectPayloadAssertion::map($perfectValues, 'metadata');
+        yield from ValueObjectPayloadAssertion::array($perfectValues, 'metadata');
     }
 }

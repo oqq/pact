@@ -21,7 +21,7 @@ final class JsonPatternBuilder
     public function withPattern(array $content): self
     {
         $clone = clone $this;
-        $clone->content = $content;
+        $clone->content = array_replace_recursive($this->content, $content);
 
         return $clone;
     }

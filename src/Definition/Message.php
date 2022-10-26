@@ -11,7 +11,7 @@ final class Message
     private Description $description;
     private ProviderStates $providerStates;
     private Body $body;
-    private array $metadata;
+    private Body $metadata;
 
     public static function fromArray(array $payload): self
     {
@@ -25,13 +25,14 @@ final class Message
         Assert::isArray($payload['body']);
 
         Assert::keyExists($payload, 'metadata');
-        Assert::isMap($payload['metadata']);
+        Assert::isArray($payload['metadata']);
 
         $description = Description::fromString($payload['description']);
         $providerStates = ProviderStates::fromArray($payload['provider_states']);
         $body = Body::fromArray($payload['body']);
+        $metadata = Body::fromArray($payload['metadata']);
 
-        return new self($description, $providerStates, $body, $payload['metadata']);
+        return new self($description, $providerStates, $body, $metadata);
     }
 
     public function toArray(): array
@@ -40,7 +41,7 @@ final class Message
             'description' => $this->description->value(),
             'provider_states' => $this->providerStates->toArray(),
             'body' => $this->body->toArray(),
-            'metadata' => $this->metadata,
+            'metadata' => $this->metadata->toArray(),
         ];
     }
 
@@ -54,7 +55,7 @@ final class Message
         return $this->body;
     }
 
-    public function metadata(): array
+    public function metadata(): Body
     {
         return $this->metadata;
     }
@@ -63,7 +64,7 @@ final class Message
         Description $description,
         ProviderStates $providerStates,
         Body $body,
-        array $metadata
+        Body $metadata
     ) {
         $this->description = $description;
         $this->providerStates = $providerStates;
