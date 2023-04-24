@@ -13,6 +13,7 @@ final class ProviderStates
 
     public static function fromArray(array $payload): self
     {
+        Assert::isList($payload);
         Assert::allIsArray($payload);
 
         $providerStates = \array_map(
@@ -31,6 +32,9 @@ final class ProviderStates
         );
     }
 
+    /**
+     * @no-named-arguments
+     */
     private function __construct(ProviderState ...$providerStates)
     {
         $this->providerStates = $providerStates;

@@ -13,7 +13,7 @@ final class MatchingRule
 
     private const DEFAULT_COMBINE_TYPE = self::COMBINE_TYPE_AND;
 
-    /** @var array<self::COMBINE_TYPE_*> */
+    /** @var array<MatchingRule::COMBINE_TYPE_*> */
     private const COMBINE_TYPES = [
         self::COMBINE_TYPE_AND,
         self::COMBINE_TYPE_OR,
@@ -73,6 +73,8 @@ final class MatchingRule
     }
 
     /**
+     * @no-named-arguments
+     *
      * @param self::COMBINE_TYPE_* $combine
      */
     private function __construct(string $combine, Matcher ...$matchers)
