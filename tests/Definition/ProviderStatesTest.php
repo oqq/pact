@@ -67,5 +67,9 @@ final class ProviderStatesTest extends TestCase
             new InvalidArgumentException('Expected an array. Got: integer'),
             [5],
         ];
+        yield 'invalid array key' => [
+            new InvalidArgumentException('Expected list - non-associative array.'),
+            ['x' => PayloadExample::providerState()],
+        ];
     }
 }

@@ -7,6 +7,8 @@
     ignoreInternalFunctionFalseReturn="false"
     ignoreInternalFunctionNullReturn="false"
     findUnusedPsalmSuppress="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src"/>

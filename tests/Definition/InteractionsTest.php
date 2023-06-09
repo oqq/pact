@@ -44,5 +44,9 @@ final class InteractionsTest extends TestCase
             new InvalidArgumentException('Expected an array. Got: integer'),
             [5],
         ];
+        yield 'invalid type array keys' => [
+            new InvalidArgumentException('Expected list - non-associative array.'),
+            ['x' => PayloadExample::interaction()],
+        ];
     }
 }

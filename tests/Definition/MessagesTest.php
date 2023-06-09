@@ -44,5 +44,9 @@ final class MessagesTest extends TestCase
             new InvalidArgumentException('Expected an array. Got: integer'),
             [5],
         ];
+        yield 'invalid array keys' => [
+            new InvalidArgumentException('Expected list - non-associative array.'),
+            ['x' => PayloadExample::message()],
+        ];
     }
 }

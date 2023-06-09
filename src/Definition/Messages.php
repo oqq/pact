@@ -6,6 +6,9 @@ namespace Oqq\Pact\Definition;
 
 use Oqq\Pact\Util\Assert;
 
+/**
+ * @implements \IteratorAggregate<Message>
+ */
 final class Messages implements \IteratorAggregate
 {
     /** @var list<Message> */
@@ -13,6 +16,7 @@ final class Messages implements \IteratorAggregate
 
     public static function fromArray(array $payload): self
     {
+        Assert::isList($payload);
         Assert::allIsArray($payload);
 
         $messages = \array_map(
@@ -36,6 +40,9 @@ final class Messages implements \IteratorAggregate
         yield from $this->messages;
     }
 
+    /**
+     * @no-named-arguments
+     */
     private function __construct(Message ...$messages)
     {
         $this->messages = $messages;

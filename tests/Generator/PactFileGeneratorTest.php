@@ -29,7 +29,7 @@ final class PactFileGeneratorTest extends TestCase
     public function testItThrowsWithUnsupportedVersionMessagePactGenerate(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectDeprecationMessage('Could not generate for version "4.0.0"');
+        $this->expectExceptionMessage('Could not generate for version "4.0.0"');
 
         $this->generator->generateMessagePact(
             Specification::fromArray(['version' => '4.0.0']),

@@ -13,6 +13,7 @@ final class Interactions
 
     public static function fromArray(array $payload): self
     {
+        Assert::isList($payload);
         Assert::allIsArray($payload);
 
         $interactions = \array_map(
@@ -31,6 +32,9 @@ final class Interactions
         );
     }
 
+    /**
+     * @no-named-arguments
+     */
     private function __construct(Interaction ...$interactions)
     {
         $this->interactions = $interactions;
