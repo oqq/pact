@@ -7,11 +7,10 @@ namespace Oqq\PactTest\PactBuilder;
 use Oqq\Pact\Definition\MatchingRules;
 use Oqq\Pact\PactBuilder\JsonPatternBuilder;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\JsonPatternBuilder
- */
+#[CoversClass(\Oqq\Pact\PactBuilder\JsonPatternBuilder::class)]
 final class JsonPatternBuilderTest extends TestCase
 {
     public function testItBuildsMessage(): void

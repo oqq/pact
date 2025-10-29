@@ -6,12 +6,11 @@ namespace Oqq\PactTest\PactBuilder;
 
 use Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\PactBuilder\MatcherCollector;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\MatcherCollector
- */
+#[CoversClass(MatcherCollector::class)]
 final class MatcherCollectorTest extends TestCase
 {
     public function testItCollectsMatchers(): void

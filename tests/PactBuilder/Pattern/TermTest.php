@@ -8,11 +8,10 @@ use Oqq\Pact\Definition\Matcher\Regex;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use Oqq\Pact\PactBuilder\Pattern\Term;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\Pattern\Term
- */
+#[CoversClass(\Oqq\Pact\PactBuilder\Pattern\Term::class)]
 final class TermTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void

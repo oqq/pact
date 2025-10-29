@@ -7,11 +7,11 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\InteractionPact;
 use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\InteractionPact
- */
+#[CoversClass(\Oqq\Pact\Definition\InteractionPact::class)]
 final class InteractionPactTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -29,9 +29,7 @@ final class InteractionPactTest extends TestCase
         Assert::assertArrayHasKey('interactions', $payload);
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -42,7 +40,7 @@ final class InteractionPactTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         $perfectValues = [
             'consumer' => PayloadExample::consumer(),

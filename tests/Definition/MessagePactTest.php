@@ -7,11 +7,11 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\MessagePact;
 use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\MessagePact
- */
+#[CoversClass(\Oqq\Pact\Definition\MessagePact::class)]
 final class MessagePactTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -31,9 +31,7 @@ final class MessagePactTest extends TestCase
         Assert::assertArrayHasKey('messages', $pact->toArray());
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -44,7 +42,7 @@ final class MessagePactTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         $perfectValues = [
             'consumer' => PayloadExample::consumer(),

@@ -8,11 +8,10 @@ use Oqq\Pact\Definition\Matcher\Collection;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use Oqq\Pact\PactBuilder\Pattern\EachLike;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\Pattern\EachLike
- */
+#[CoversClass(\Oqq\Pact\PactBuilder\Pattern\EachLike::class)]
 final class EachLikeTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void

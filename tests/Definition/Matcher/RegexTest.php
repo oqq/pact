@@ -7,11 +7,11 @@ namespace Oqq\PactTest\Definition\Matcher;
 use Oqq\Pact\Definition\Matcher\Regex;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Matcher\Regex
- */
+#[CoversClass(Regex::class)]
 final class RegexTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -34,9 +34,7 @@ final class RegexTest extends TestCase
     }
 
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -48,7 +46,7 @@ final class RegexTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         yield 'missing type' => [
             new InvalidArgumentException('Expected the key "match" to exist.'),

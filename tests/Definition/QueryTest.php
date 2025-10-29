@@ -6,11 +6,11 @@ namespace Oqq\PactTest\Definition;
 
 use Oqq\Pact\Definition\Query;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Query
- */
+#[CoversClass(\Oqq\Pact\Definition\Query::class)]
 final class QueryTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -25,9 +25,7 @@ final class QueryTest extends TestCase
         Assert::assertIsArray($payload['terms']);
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -38,7 +36,7 @@ final class QueryTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         yield 'invalid type' => [
             new \InvalidArgumentException('Expected map - associative array'),

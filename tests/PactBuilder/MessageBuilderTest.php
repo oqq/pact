@@ -7,11 +7,10 @@ namespace Oqq\PactTest\PactBuilder;
 use Oqq\Pact\PactBuilder\JsonPatternBuilder;
 use Oqq\Pact\PactBuilder\MessageBuilder;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\MessageBuilder
- */
+#[CoversClass(\Oqq\Pact\PactBuilder\MessageBuilder::class)]
 final class MessageBuilderTest extends TestCase
 {
     public function testItBuildsMessage(): void

@@ -7,11 +7,11 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\Messages;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Messages
- */
+#[CoversClass(Messages::class)]
 final class MessagesTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -21,13 +21,11 @@ final class MessagesTest extends TestCase
             PayloadExample::message(),
         ]);
 
-        Assert::assertContainsOnly('array', $messages->toArray());
-        Assert::assertCount(2, $messages);
+        Assert::assertContainsOnlyArray($messages->toArray());
+        Assert::assertCount(2, $messages->toArray());
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -38,7 +36,7 @@ final class MessagesTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         yield 'invalid type for message value' => [
             new InvalidArgumentException('Expected an array. Got: integer'),

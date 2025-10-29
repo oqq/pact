@@ -8,16 +8,14 @@ use Oqq\Pact\Definition\MatchingRule;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\MatchingRule
- */
+#[CoversClass(\Oqq\Pact\Definition\MatchingRule::class)]
 final class MatchingRuleTest extends TestCase
 {
-    /**
-     * @dataProvider validValueProvider
-     */
+    #[DataProvider('validValueProvider')]
     public function testItWillCreateFromPerfectPayload(array $payloadExample): void
     {
         $rule = MatchingRule::fromArray($payloadExample);
@@ -27,13 +25,13 @@ final class MatchingRuleTest extends TestCase
         Assert::assertArrayHasKey('combine', $payload);
         Assert::assertArrayHasKey('matchers', $payload);
         Assert::assertIsArray($payload['matchers']);
-        Assert::assertContainsOnly('array', $payload['matchers']);
+        Assert::assertContainsOnlyArray($payload['matchers']);
     }
 
     /**
      * @return iterable<array-key, array<array>>
      */
-    public function validValueProvider(): iterable
+    public static function validValueProvider(): iterable
     {
         yield 'full example' => [
             [
@@ -60,9 +58,7 @@ final class MatchingRuleTest extends TestCase
         Assert::assertSame([], $rule->matchers());
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -73,7 +69,7 @@ final class MatchingRuleTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         $perfectValues = [
             'combine' => 'AND',
