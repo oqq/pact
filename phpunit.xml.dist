@@ -1,13 +1,22 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd" bootstrap="./vendor/autoload.php" beStrictAboutChangesToGlobalState="true" beStrictAboutOutputDuringTests="true" executionOrder="random" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
-  <testsuites>
-    <testsuite name="Oqq\Pact tests">
-      <directory>./tests</directory>
-    </testsuite>
-  </testsuites>
-  <source>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="./vendor/autoload.php"
+    beStrictAboutChangesToGlobalState="true"
+    beStrictAboutOutputDuringTests="true"
+    cacheDirectory=".phpunit.cache"
+    requireCoverageMetadata="true"
+    executionOrder="random"
+>
+    <testsuites>
+        <testsuite name="Oqq\Pact tests">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <source>
     <include>
-      <directory suffix=".php">./src</directory>
+        <directory suffix=".php">./src</directory>
     </include>
-  </source>
+    </source>
 </phpunit>
