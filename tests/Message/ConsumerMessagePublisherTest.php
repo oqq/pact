@@ -9,12 +9,11 @@ use Oqq\Pact\Message\ConsumerMessagePublisher;
 use Oqq\Pact\Message\Message;
 use Oqq\Pact\Message\MessageConsumer;
 use Oqq\PactTest\Definition\PayloadExample;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Message\ConsumerMessagePublisher
- */
+#[CoversClass(\Oqq\Pact\Message\ConsumerMessagePublisher::class)]
 final class ConsumerMessagePublisherTest extends TestCase
 {
     /** @var MessageConsumer&MockObject  */

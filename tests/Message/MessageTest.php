@@ -8,11 +8,10 @@ use Oqq\Pact\Definition\Message as MessageDefinition;
 use Oqq\Pact\Message\Message;
 use Oqq\PactTest\Definition\PayloadExample;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Message\Message
- */
+#[CoversClass(\Oqq\Pact\Message\Message::class)]
 final class MessageTest extends TestCase
 {
     public function testItCreatesFromDefinition(): void

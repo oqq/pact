@@ -6,13 +6,12 @@ namespace Oqq\PactTest\Definition;
 
 use Oqq\Pact\Definition\Interactions;
 use Oqq\Pact\Exception\InvalidArgumentException;
-use Oqq\PactTest\ValueObjectPayloadAssertion;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Interactions
- */
+#[CoversClass(\Oqq\Pact\Definition\Interactions::class)]
 final class InteractionsTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void
@@ -22,12 +21,10 @@ final class InteractionsTest extends TestCase
             PayloadExample::interaction(),
         ]);
 
-        Assert::assertContainsOnly('array', $interactions->toArray());
+        Assert::assertContainsOnlyArray($interactions->toArray());
     }
 
-    /**
-     * @dataProvider invalidPayloadProvider
-     */
+    #[DataProvider('invalidPayloadProvider')]
     public function testItWillThrowWithInvalidPayload(\Exception $expectedException, array $payloadExample): void
     {
         $this->expectExceptionObject($expectedException);
@@ -38,7 +35,7 @@ final class InteractionsTest extends TestCase
     /**
      * @return iterable<array-key, array{0: \Exception, 1: array}>
      */
-    public function invalidPayloadProvider(): iterable
+    public static function invalidPayloadProvider(): iterable
     {
         yield 'invalid type for interaction value' => [
             new InvalidArgumentException('Expected an array. Got: integer'),

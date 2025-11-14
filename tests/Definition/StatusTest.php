@@ -7,16 +7,14 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\Status;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Status
- */
+#[CoversClass(\Oqq\Pact\Definition\Status::class)]
 final class StatusTest extends TestCase
 {
-    /**
-     * @dataProvider validValueProvider
-     */
+    #[DataProvider('validValueProvider')]
     public function testItWillCreateFromPerfectValue(int $valueExample): void
     {
         $status = Status::fromInteger($valueExample);
@@ -27,16 +25,14 @@ final class StatusTest extends TestCase
     /**
      * @return iterable<array-key, array<int>>
      */
-    public function validValueProvider(): iterable
+    public static function validValueProvider(): iterable
     {
         yield [100];
         yield [200];
         yield [599];
     }
 
-    /**
-     * @dataProvider invalidValueProvider
-     */
+    #[DataProvider('invalidValueProvider')]
     public function testItWillThrowWithInvalidValue(string $expectedMessage, int $valueExample): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -48,7 +44,7 @@ final class StatusTest extends TestCase
     /**
      * @return iterable<array-key, array{0: string, 1: int}>
      */
-    public function invalidValueProvider(): iterable
+    public static function invalidValueProvider(): iterable
     {
         yield 'value to small' => [
             '/Expected a value between \d+ and \d+\. Got: 99/',

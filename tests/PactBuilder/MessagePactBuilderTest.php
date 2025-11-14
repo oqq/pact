@@ -7,11 +7,10 @@ namespace Oqq\PactTest\PactBuilder;
 use Oqq\Pact\PactBuilder\MessageBuilder;
 use Oqq\Pact\PactBuilder\MessagePactBuilder;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\PactBuilder\MessagePactBuilder
- */
+#[CoversClass(\Oqq\Pact\PactBuilder\MessagePactBuilder::class)]
 final class MessagePactBuilderTest extends TestCase
 {
     public function testItBuildsPact(): void
@@ -29,7 +28,7 @@ final class MessagePactBuilderTest extends TestCase
 
         Assert::assertSame('test-consumer', $pact->consumer()->toArray()['name']);
         Assert::assertSame('test-provider', $pact->provider()->toArray()['name']);
-        Assert::assertCount(2, $pact->messages());
+        Assert::assertCount(2, $pact->messages()->toArray());
     }
 
     public function testItIsImmutable(): void

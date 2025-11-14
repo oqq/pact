@@ -7,11 +7,10 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\Matcher;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Matcher
- */
+#[CoversClass(Matcher::class)]
 final class MatcherTest extends TestCase
 {
     public function testItWillCreateFromPerfectPayload(): void

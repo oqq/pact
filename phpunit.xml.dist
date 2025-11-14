@@ -5,8 +5,8 @@
     bootstrap="./vendor/autoload.php"
     beStrictAboutChangesToGlobalState="true"
     beStrictAboutOutputDuringTests="true"
-    forceCoversAnnotation="true"
-    verbose="true"
+    cacheDirectory=".phpunit.cache"
+    requireCoverageMetadata="true"
     executionOrder="random"
 >
     <testsuites>
@@ -14,10 +14,9 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
-
-    <coverage>
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </coverage>
+    <source>
+    <include>
+        <directory suffix=".php">./src</directory>
+    </include>
+    </source>
 </phpunit>

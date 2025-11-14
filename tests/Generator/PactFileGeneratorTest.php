@@ -10,11 +10,10 @@ use Oqq\Pact\Generator\PactFileGenerator;
 use Oqq\Pact\Generator\Specification;
 use Oqq\PactTest\Definition\PayloadExample;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Generator\PactFileGenerator
- */
+#[CoversClass(PactFileGenerator::class)]
 final class PactFileGeneratorTest extends TestCase
 {
     private PactFileGenerator $generator;

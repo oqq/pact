@@ -7,11 +7,10 @@ namespace Oqq\PactTest\Definition;
 use Oqq\Pact\Definition\Method;
 use Oqq\Pact\Exception\InvalidArgumentException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Definition\Method
- */
+#[CoversClass(\Oqq\Pact\Definition\Method::class)]
 final class MethodTest extends TestCase
 {
     public function testItWillCreateFromPerfectValue(): void

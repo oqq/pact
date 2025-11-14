@@ -6,11 +6,10 @@ namespace Oqq\PactTest\Util;
 
 use Oqq\Pact\Exception\InvalidArgumentException;
 use Oqq\Pact\Util\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Util\Assert
- */
+#[CoversClass(Assert::class)]
 final class AssertTest extends TestCase
 {
     public function testItThrowsProprietaryException(): void

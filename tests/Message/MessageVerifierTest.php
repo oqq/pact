@@ -11,12 +11,11 @@ use Oqq\Pact\Message\MessagePublisher;
 use Oqq\Pact\Message\MessageVerifier;
 use Oqq\PactTest\Definition\PayloadExample;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Oqq\Pact\Message\MessageVerifier
- */
+#[CoversClass(\Oqq\Pact\Message\MessageVerifier::class)]
 final class MessageVerifierTest extends TestCase
 {
     /** @var MessagePublisher&MockObject */
