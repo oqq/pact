@@ -14,15 +14,15 @@
         }
     ],
     "require": {
-        "php": "8.3.* || 8.4.*",
+        "php": "8.3.* || 8.4.* || 8.5.*",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
-        "infection/infection": "^0.29",
+        "infection/infection": "^0.30.3",
         "phpunit/phpunit": "^12.0",
         "psalm/plugin-phpunit": "^0.19",
         "roave/security-advisories": "dev-latest",
-        "vimeo/psalm": "^6.0"
+        "vimeo/psalm": "^6.16.1"
     },
     "config": {
         "sort-packages": true,
