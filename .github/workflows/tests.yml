@@ -14,6 +14,7 @@ jobs:
         php-version:
           - "8.3"
           - "8.4"
+          - "8.5"
         dependencies:
           - "locked"
 
@@ -62,6 +63,7 @@ jobs:
         php-version:
           - "8.3"
           - "8.4"
+          - "8.5"
         dependencies:
           - "locked"
           - "highest"
@@ -112,6 +114,7 @@ jobs:
         php-version:
           - "8.3"
           - "8.4"
+          - "8.5"
         dependencies:
           - "locked"
 
